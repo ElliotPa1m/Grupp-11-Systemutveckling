@@ -1,6 +1,6 @@
 # Grupp-11-Systemutveckling
 
-# Projektnamn: ShirtLab
+## Projektnamn: ShirtLab
 ## Nivå namn: Basic, Plus, Gold
 
 # VEM SKA GÖRA VAD I BACKEND:
