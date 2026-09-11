@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="sz6db5gVmrbcgB7zjGJ5">
+    <mxGraphModel dx="1404" dy="744" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-1" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" value="Sitemap" vertex="1">
+          <mxGeometry height="386" width="310" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-2" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; / &quot; = product (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-3" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /cart &quot; = shopping cart (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-4" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /checkout &quot; = payment/placed order (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-5" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /confirmation &quot; = order confirmation (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-16" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /product/:id &quot; = detailed product page (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="146" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-15" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /receipt &quot; = receipt page (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="176" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-14" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /receipt/:id &quot; = detailed receipt page (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-13" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /admin &quot; = product list (admin view)" vertex="1">
+          <mxGeometry height="30" width="310" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-12" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /admin/new &quot; = add new product (admin view)" vertex="1">
+          <mxGeometry height="30" width="310" y="266" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-11" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /login/admin &quot; = admin log in (admin view)" vertex="1">
+          <mxGeometry height="30" width="310" y="296" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-10" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /login &quot; = log in (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="326" as="geometry" />
+        </mxCell>
+        <mxCell id="MqdwtGiZB8dBem5KQbaR-9" parent="MqdwtGiZB8dBem5KQbaR-1" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;" value="&quot; /register &quot; = register page (customer view)" vertex="1">
+          <mxGeometry height="30" width="310" y="356" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
