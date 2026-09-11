@@ -1,7 +1,7 @@
 # Grupp-11-Systemutveckling
 
-## Projektnamn: ShirtLab
-## Nivå namn: Basic, Plus, Gold
+# Projektnamn: ShirtLab
+# Nivå namn: Basic, Plus, Gold
 
 # VEM SKA GÖRA VAD I BACKEND:
 ### August: admin.ts, index.ts, receipts.ts
