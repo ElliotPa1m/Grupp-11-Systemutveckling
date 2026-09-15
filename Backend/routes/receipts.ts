@@ -16,6 +16,10 @@ interface TierReceipt {
   date: Date;
 }
 
+type Receipt =
+  { type: 'order'; data: OrderReceipt } |
+  { type: 'tier'; data: TierReceipt };
+
 const findAllOrderReceipts = async (userId: number): Promise<OrderReceipt[]> => {
   const result = await db.query(`
     SELECT 
@@ -47,4 +51,16 @@ const findAllTierReceipts = async (userId: number): Promise<TierReceipt[]> => {
     `, [userId]
   );
   return result.rows;
+}
+
+export const getAllReceipts = async (userId: number): Promise<Receipt[]> => {
+  const [orders, tiers] = await Promise.all([
+    findAllOrderReceipts(userId),
+    findAllTierReceipts(userId),
+  ]);
+
+  return [
+    ...orders.map(o => ({ type: 'order' as const, data: o })),
+    ...tiers.map(t => ({ type: 'tier' as const, data: t })),
+  ].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
