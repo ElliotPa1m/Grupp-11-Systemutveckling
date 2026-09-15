@@ -3,6 +3,7 @@ import cors from 'cors';
 import pool from './config/database.js';
 import adminRoutes from './routes/admin.js';
 import productRouter from "./routes/products.js"
+import usersRouter from "./routes/users.js"
 
 import tiersRouter from "./routes/tiers.js";
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/api/tiers", tiersRouter);
 app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRouter);
+app.use("/api/users", usersRouter)
 
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'Server is running' });
