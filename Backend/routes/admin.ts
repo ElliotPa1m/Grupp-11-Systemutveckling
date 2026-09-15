@@ -6,36 +6,36 @@ import express from "express";
 
 interface Admin {
   id: number;
-  username: string;
+  name: string;
   password: string;
 }
 
-const findByUsername = async (username: string): Promise<Admin | undefined> => {
+const findByName = async (name: string): Promise<Admin | undefined> => {
   const result = await db.query(`
     SELECT * FROM admin WHERE name = $1
-    `, [username]
+    `, [name]
   );
   return result.rows[0];
 }
 
 export const loginAdmin = async (
-  req: Request<{}, {}, { username: string, password: string }>, res: Response
+  req: Request<{}, {}, { name: string, password: string }>, res: Response
 ) => {
   try {
-    const { username, password } = req.body;
+    const { name, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({ success: false, error: 'Password or username is missing' });
+    if (!name || !password) {
+      return res.status(400).json({ success: false, error: 'Password or name is missing' });
     }
 
-    const admin = await findByUsername(username);
+    const admin = await findByName(name);
     if (!admin) {
-      return res.status(401).json({ success: false, error: 'Invalid username or password' });
+      return res.status(401).json({ success: false, error: 'Invalid name or password' });
     }
 
     const isValid = await bcrypt.compare(password, admin.password)
     if (!isValid) {
-      return res.status(401).json({ success: false, error: 'Invalid username or password'});
+      return res.status(401).json({ success: false, error: 'Invalid name or password'});
     }
 
     if (!process.env.JWT_SECRET) {
