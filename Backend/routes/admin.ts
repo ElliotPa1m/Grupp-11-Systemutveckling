@@ -12,7 +12,7 @@ interface Admin {
 
 const findByUsername = async (username: string): Promise<Admin | undefined> => {
   const result = await db.query(`
-    SELECT * FROM admin WHERE username = $1
+    SELECT * FROM admin WHERE name = $1
     `, [username]
   );
   return result.rows[0];
