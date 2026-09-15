@@ -4,6 +4,8 @@ import pool from './config/database.js';
 import adminRoutes from './routes/admin.js';
 import productRouter from "./routes/products.js"
 
+import tiersRouter from "./routes/tiers.js";
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -16,6 +18,7 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use("/api/tiers", tiersRouter);
 app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRouter);
 
