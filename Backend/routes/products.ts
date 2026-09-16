@@ -1,20 +1,31 @@
-import express from "express";
-import type { Request, Response } from "express";
-import pool from "../config/database.js";
-import {protect, adminOnly} from "../middleware/authMiddleware.js";
+import express from "express"
+import type { Request, Response } from "express"
+import pool from "../config/database.js"
+import { protect, adminOnly } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
 interface Product {
     id: number
     name: string | null
-    no_print: string | null
-    small_print: string | null
-    back_print: string | null
     price: number
     clothes_image: string | null
     description: string | null
-    print_image: string | null
+    tier_id: number
+}
+
+interface Print {
+    id: number
+    small_print: string | null
+    back_print: string | null
+}
+
+const getUserTierId = async (userId: number): Promise<number | null> => {
+    const result = await pool.query<{ tier_id: number }>(
+        "SELECT tier_id FROM users WHERE id = $1",
+        [userId]
+    )
+    return result.rows[0]?.tier_id ?? null
 }
 
 router.get("/", async (req: Request, res: Response) => {
@@ -23,65 +34,84 @@ router.get("/", async (req: Request, res: Response) => {
         res.json(result.rows)
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Failed to fetch products"})
+        res.status(500).json({ message: "Failed to fetch products" })
     }
 })
 
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/:id", protect, async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id)
         if (Number.isNaN(id)) {
-            res.status(400).json({message: "Invalid product id"})
+            res.status(400).json({ message: "Invalid product id" })
             return
         }
 
-        const result = await pool.query<Product>(
+        const productResult = await pool.query<Product>(
             "SELECT * FROM products WHERE id = $1",
             [id]
         )
 
-        if (result.rows.length === 0) {
-            res.status(404).json({message: "Product not found"})
+        const product = productResult.rows[0]
+
+        if (!product) {
+            res.status(404).json({ message: "Product not found" })
             return
         }
 
-        res.json(result.rows[0])
+        if (req.user?.role !== "admin") {
+            if (!req.user?.userId) {
+                res.status(401).json({ message: "Not authenticated" })
+                return
+            }
+
+            const userTierId = await getUserTierId(req.user.userId)
+            if (userTierId === null) {
+                res.status(404).json({ message: "User not found" })
+                return
+            }
+
+            if (userTierId < product.tier_id) {
+                res.status(403).json({ message: "Upgrade your membership to view this product" })
+                return
+            }
+        }
+
+        const printsResult = await pool.query<Print>("SELECT * FROM prints")
+
+        res.json({ ...product, prints: printsResult.rows })
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Failed to fetch product"})
+        res.status(500).json({ message: "Failed to fetch product" })
     }
 })
 
 router.post("/", protect, adminOnly, async (req: Request, res: Response) => {
     try {
-        const {
-            name,
-            no_print,
-            small_print,
-            back_print,
-            price,
-            clothes_image,
-            description,
-            print_image
-        } = req.body as Partial<Product>
+        const { name, price, clothes_image, description, tier_id } = req.body as Partial<Product>
 
-        if (price === undefined) {
-            res.status(400).json({message: "Price is required"})
+        if (price === undefined || tier_id === undefined) {
+            res.status(400).json({ message: "Price and tier_id are required" })
             return
         }
 
         const result = await pool.query<Product>(
-            `INSERT INTO products
-                (name, no_print, small_print, back_print, price, clothes_image, description, print_image)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                RETURNING *`,
-                [name ?? null, no_print ?? null, small_print ?? null, back_print ?? null, price, clothes_image ?? null, description ?? null, print_image ?? null]
+            `INSERT INTO products (name, price, clothes_image, description, tier_id)
+             VALUES ($1, $2, $3, $4, $5)
+             RETURNING *`,
+            [name ?? null, price, clothes_image ?? null, description ?? null, tier_id]
         )
 
-        res.status(201).json(result.rows[0])
+        const created = result.rows[0]
+
+        if (!created) {
+            res.status(500).json({ message: "Failed to create product" })
+            return
+        }
+
+        res.status(201).json(created)
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Failed to create product"})
+        res.status(500).json({ message: "Failed to create product" })
     }
 })
 
@@ -89,45 +119,35 @@ router.put("/:id", protect, adminOnly, async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id)
         if (Number.isNaN(id)) {
-            res.status(400).json({message: "Invalid product id"})
+            res.status(400).json({ message: "Invalid product id" })
             return
         }
 
-        const {
-            name,
-            no_print,
-            small_print,
-            back_print,
-            price,
-            clothes_image,
-            description,
-            print_image
-        } = req.body as Partial<Product>
+        const { name, price, clothes_image, description, tier_id } = req.body as Partial<Product>
 
         const result = await pool.query<Product>(
-             `UPDATE products SET
+            `UPDATE products SET
                 name = COALESCE($1, name),
-                no_print = COALESCE($2, no_print),
-                small_print = COALESCE($3, small_print),
-                back_print = COALESCE($4, back_print),
-                price = COALESCE($5, price),
-                clothes_image = COALESCE($6, clothes_image),
-                description = COALESCE($7, description),
-                print_image = COALESCE($8, print_image)
-             WHERE id = $9
+                price = COALESCE($2, price),
+                clothes_image = COALESCE($3, clothes_image),
+                description = COALESCE($4, description),
+                tier_id = COALESCE($5, tier_id)
+             WHERE id = $6
              RETURNING *`,
-            [name, no_print, small_print, back_print, price, clothes_image, description, print_image, id]
+            [name, price, clothes_image, description, tier_id, id]
         )
 
-        if (result.rows.length === 0) {
-            res.status(404).json({message: "Product not found"})
+        const updated = result.rows[0]
+
+        if (!updated) {
+            res.status(404).json({ message: "Product not found" })
             return
         }
 
-        res.json(result.rows[0])
+        res.json(updated)
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Failed to update product"})
+        res.status(500).json({ message: "Failed to update product" })
     }
 })
 
@@ -135,21 +155,21 @@ router.delete("/:id", protect, adminOnly, async (req: Request, res: Response) =>
     try {
         const id = Number(req.params.id)
         if (Number.isNaN(id)) {
-            res.status(400).json({message: "invalid product id"})
+            res.status(400).json({ message: "Invalid product id" })
             return
         }
 
         const result = await pool.query("DELETE FROM products WHERE id = $1", [id])
 
         if (result.rowCount === 0) {
-            res.status(404).json({message: "Product not found"})
+            res.status(404).json({ message: "Product not found" })
             return
         }
 
-        res.json({message: "Product deleted"})
+        res.json({ message: "Product deleted" })
     } catch (error) {
         console.error(error)
-        res.status(500).json({message: "Failed to delete product"})
+        res.status(500).json({ message: "Failed to delete product" })
     }
 })
 
