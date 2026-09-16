@@ -3,9 +3,8 @@ import type { Request, Response } from "express";
 import express from "express";
 import { protect } from '../middleware/authMiddleware.js';
 
-interface OrderReceipt {
+interface OrderReceiptSummary {
   id: number;
-  product_name: string;
   total_price: number;
   date: Date;
 }
@@ -17,20 +16,29 @@ interface TierReceipt {
   date: Date;
 }
 
-type Receipt =
-  { type: 'order'; data: OrderReceipt } |
-  { type: 'tier'; data: TierReceipt };
+interface OrderReceiptDetail extends OrderReceiptSummary {
+  products: {
+    product_id: number;
+    product_name: string;
+    price: number;
+    prints: {
+      print_name: string;
+    }[]
+  }[]
+}
 
-const findAllOrderReceipts = async (userId: number): Promise<OrderReceipt[]> => {
+type Receipt =
+  { type: 'order'; data: OrderReceiptSummary } |
+  { type: 'order'; data: OrderReceiptDetail } |
+  { type: 'tier'; data: TierReceipt }; 
+
+const findAllOrderReceipts = async (userId: number): Promise<OrderReceiptSummary[]> => {
   const result = await db.query(`
     SELECT 
       ro.id,
       ro.total_price,
-      ro.date,
-      p.name AS product_name
+      ro.date
     FROM receipts_orders ro
-    JOIN orders o ON ro.order_id = o.id
-    JOIN products p ON o.product_id = p.id
     WHERE ro.user_id = $1
     ORDER BY ro.date DESC;
     `, [userId]
@@ -54,20 +62,64 @@ const findAllTierReceipts = async (userId: number): Promise<TierReceipt[]> => {
   return result.rows;
 };
 
-const findOrderReceiptById = async (userId: number, id: number): Promise<OrderReceipt | undefined> => {
-  const result = await db.query(`
+const findOrderReceiptById = async (userId: number, id: number): Promise<OrderReceiptDetail | undefined> => {
+  const receipt = await db.query(`
     SELECT
-      ro.id,
-      ro.total_price,
-      ro.date,
-      p.name AS product_name
-      FROM receipts_orders ro
-      JOIN orders o ON ro.order_id = o.id
-      JOIN products p ON o.product_id = p.id
-      WHERE ro.user_id = $1 AND ro.id = $2
+      id,
+      total_price,
+      date
+    FROM receipts_orders
+    WHERE user_id = $1 AND id = $2;
     `, [userId, id]
   );
-  return result.rows[0];
+
+  if (!receipt.rows[0]) {
+    return undefined;
+  }
+
+  const products = await db.query(`
+    SELECT
+      pr.id,
+      pr.product_id,
+      pr.price,
+      p.name
+    FROM products_receipts pr
+    JOIN products p ON pr.product_id = p.id
+    WHERE pr.receipt_id = $1;
+    `, [id]
+  );
+
+  const productIds = products.rows.map(row => row.id);
+
+  const prints = await db.query(`
+    SELECT 
+      ppr.products_receipt_id,
+      pri.name
+    FROM prints_products_receipt ppr
+    JOIN prints pri ON ppr.print_id = pri.id
+    WHERE ppr.products_receipt_id = ANY($1);
+    `, [productIds]
+  );
+
+  const productList = products.rows.map(product => {
+    const matchingPrints = prints.rows
+      .filter(print => print.products_receipt_id === product.id)
+      .map(print => ({ 'print_name': print.name }));
+
+    return {
+      product_id: product.product_id,
+      product_name: product.name,
+      price: product.price,
+      prints: matchingPrints
+    }
+  });
+
+  return {
+    id: receipt.rows[0].id,
+    total_price: receipt.rows[0].total_price,
+    date: receipt.rows[0].date,
+    products: productList,
+  }
 };
 
 const findTierReceiptById = async (userId: number, id: number): Promise<TierReceipt | undefined> => {
