@@ -16,6 +16,7 @@ interface Product {
 
 interface Print {
     id: number
+    name: string | null
     small_print: string | null
     back_print: string | null
 }

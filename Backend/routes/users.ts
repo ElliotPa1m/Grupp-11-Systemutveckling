@@ -3,6 +3,7 @@ import type { Request, Response } from "express"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import pool from "../config/database.js"
+import { protect } from "../middleware/authMiddleware.js"
 
 const router = express.Router()
 
@@ -29,6 +30,32 @@ const getStandardTierId = async (): Promise<number | null> => {
     )
     return result.rows[0]?.id ?? null
 }
+
+router.get("/me", protect, async (req: Request, res: Response) => {
+    try {
+        if (!req.user?.userId) {
+            res.status(401).json({success: false, error: "Not authenticated"})
+            return
+        }
+
+        const result = await pool.query<User>(
+            "SELECT id, name, email, tier_id FROM users WHERE id = $1",
+            [req.user.userId]
+        )
+
+        const user = result.rows[0]
+
+        if (!user) {
+            res.status(404).json({success: false, error: "User not found"})
+            return
+        }
+
+        res.status(200).json({success: true, user})
+    } catch (error) {
+        console.error("Failed to fetch user:", error)
+        res.status(500).json({success: false, error: "Failed to fetch user"})
+    }
+})
 
 router.post("/register", async (req: Request, res: Response) => {
     try {
