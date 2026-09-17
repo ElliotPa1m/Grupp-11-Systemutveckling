@@ -1,11 +1,11 @@
 # Grupp-11-Systemutveckling
 
-## Projektnamn: ShirtLab
-## Nivå namn: Basic, Plus, Gold
+# Projektnamn: ShirtLab
+# Nivå namn: Basic, Plus, Gold
 
 ## Vem har gjort vad i backend:
 ### August: admin.ts, index.ts, receipts.ts, database.ts, certs/ca.pem
-### Emily: tiersMiddleware.ts, tiers.ts, orders.ts, tsconfig.json
+### Emily: tiersMiddleware.ts, tiers.ts, tsconfig.json
 ### Elliot: authMiddleware.ts,  products.ts, users.ts
 
 ## Vem har gjort vad i frontend:
