@@ -32,8 +32,8 @@ export function header () {
     headerContainer.innerHTML = `
         <header class="site-header">
 
-            <a href= "./homepage.html" class="logo">
-              <img src="../assets/logo/white-on-color.svg" alt="Shirt lab">
+            <a href="./homepage.html" class="logo">
+              <img src="../assets/logo/primary.webp" alt="Shirt lab">
             </a>
 
             <div class="header-actions">
@@ -48,6 +48,17 @@ export function header () {
 
         </header>
         `;
+
+    const headerLinks =
+        headerContainer.querySelectorAll(".header-action[href]");
+
+    headerLinks.forEach((link) => {
+        const linkPath = new URL(link.href).pathname;
+
+    if (linkPath === window.location.pathname) {
+        link.setAttribute("aria-current", "page");
+    }
+    });
 
   const logoutButton =
     headerContainer.querySelector("#logout-button");

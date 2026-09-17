@@ -21,18 +21,39 @@
 }
 
 .header-actions {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  text-decoration: none;
-  margin-right: var(--space-large);
-} 
-
-.site-header .material-symbols-rounded {
-    color: var(--color-background);
-    height: 100%;
+    display: flex;
+    align-items: stretch;
+    align-self: stretch;
 }
 
-.site-header a {
-    text-decoration: none;
+.header-action {
+display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  padding-inline: var(--space-medium);
+
+  color: var(--color-background);
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.header-action:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.header-action[aria-current="page"] {
+      background-color: var(--color-background);
+      color: var(--color-text);
+}
+
+.header-action:focus-visible {
+  outline: 0.125rem solid var(--color-background);
+  outline-offset: -0.25rem;
 }
