@@ -20,14 +20,6 @@ interface Print {
     back_print: string | null
 }
 
-const getUserTierId = async (userId: number): Promise<number | null> => {
-    const result = await pool.query<{ tier_id: number }>(
-        "SELECT tier_id FROM users WHERE id = $1",
-        [userId]
-    )
-    return result.rows[0]?.tier_id ?? null
-}
-
 router.get("/", async (req: Request, res: Response) => {
     try {
         const result = await pool.query<Product>("SELECT * FROM products")
@@ -38,7 +30,7 @@ router.get("/", async (req: Request, res: Response) => {
     }
 })
 
-router.get("/:id", protect, async (req: Request, res: Response) => {
+router.get("/:id", async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id)
         if (Number.isNaN(id)) {
@@ -56,24 +48,6 @@ router.get("/:id", protect, async (req: Request, res: Response) => {
         if (!product) {
             res.status(404).json({ message: "Product not found" })
             return
-        }
-
-        if (req.user?.role !== "admin") {
-            if (!req.user?.userId) {
-                res.status(401).json({ message: "Not authenticated" })
-                return
-            }
-
-            const userTierId = await getUserTierId(req.user.userId)
-            if (userTierId === null) {
-                res.status(404).json({ message: "User not found" })
-                return
-            }
-
-            if (userTierId < product.tier_id) {
-                res.status(403).json({ message: "Upgrade your membership to view this product" })
-                return
-            }
         }
 
         const printsResult = await pool.query<Print>("SELECT * FROM prints")
