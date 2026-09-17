@@ -2,7 +2,6 @@ import db from '../config/database.js';
 import type { Request, Response } from "express";
 import express from "express";
 import { protect } from '../middleware/authMiddleware.js';
-import { getUserTierId } from './products.js';
 
 interface OrderReceiptSummary {
   id: number;
@@ -147,6 +146,14 @@ const findTierReceiptById = async (userId: number, id: number): Promise<TierRece
   return result.rows[0];
 };
 
+const getUserTierId = async (userId: number): Promise<number | null> => {
+  const result = await db.query<{ tier_id: number }>(
+    "SELECT tier_id FROM users WHERE id = $1"
+    ,[userId]
+  );
+  return result.rows[0]?.tier_id ?? null;
+};
+
 const validateCartAccess = async (userId: number, cart: CartItem[]): Promise<ValidationResult> => {
   if (cart.length === 0) {
     return { success: false, status: 400, error: "Cart is empty" };
@@ -154,7 +161,7 @@ const validateCartAccess = async (userId: number, cart: CartItem[]): Promise<Val
   
   const userTierId = await getUserTierId(userId);
   if (userTierId === null) {
-    return { success: false, status: 403, error: 'No valid tier'}
+    return { success: false, status: 403, error: 'No valid tier'};
   }
   const productIds = cart.map(item => item.productId);
 
@@ -169,15 +176,15 @@ const validateCartAccess = async (userId: number, cart: CartItem[]): Promise<Val
     const requiredTierId = tierById.get(item.productId);
 
     if (requiredTierId === undefined) {
-      return { success: false, status: 404, error: `Product ${item.productId} not found`}
+      return { success: false, status: 404, error: `Product ${item.productId} not found`};
     }
 
     if (userTierId < requiredTierId) {
-      return { success: false, status: 403, error: `Product ${item.productId} requires tier ${requiredTierId}`}
+      return { success: false, status: 403, error: `Product ${item.productId} requires tier ${requiredTierId}`};
     }
   }
 
-  return { success: true, products: result.rows.map(r => ({ id: r.id, price: r.price })) }
+  return { success: true, products: result.rows.map(r => ({ id: r.id, price: r.price })) };
 };
 
 const createReceipt = async (
@@ -233,7 +240,7 @@ const createReceipt = async (
   }
 
   const receipt = await findOrderReceiptById(userId, newReceiptId);
-  return { success: true, data: receipt! }
+  return { success: true, data: receipt! };
 }
 
 export const createReceiptController = async (req: Request<{}, {}, { cart: CartItem[]}>, res: Response) => {
@@ -339,5 +346,6 @@ const router = express.Router();
 
 router.get('/', protect, getAllReceiptsController);
 router.get('/:type/:id', protect, getReceiptByIdController);
+router.post('/', protect, createReceiptController);
 
 export default router;
