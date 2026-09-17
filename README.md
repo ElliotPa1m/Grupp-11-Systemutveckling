@@ -3,12 +3,19 @@
 # Projektnamn: ShirtLab
 # Nivå namn: Basic, Plus, Gold
 
-# VEM SKA GÖRA VAD I BACKEND:
-### August: admin.ts, index.ts, receipts.ts
-### Emily: tiersMiddleware.ts, tiers.ts, orders.ts
+## Vem har gjort vad i backend:
+### August: admin.ts, index.ts, receipts.ts, database.ts, certs/ca.pem
+### Emily: tiersMiddleware.ts, tiers.ts, tsconfig.json
 ### Elliot: authMiddleware.ts,  products.ts, users.ts
 
-# VEM SKA GÖRA VAD I FRONTEND:
-### August: admin sidorna, receipt/detailed receipts
-### Emily: cart, checkout, confirmation, tiers
-### Elliot: login/logout, register, homepage(products), detailed product
+## Vem har gjort vad i frontend:
+### August: admin-login.html, admin-new.html, admin.html, receipt.html (specifika js filer läggs till senare)
+### Emily: cart.html, checkout.html, confirmation.html, tiers.html, loggan (specifika js filer läggs till senare)
+### Elliot: login.html (samt logout funktionen), register.html (samt register.js), homepage.html (samt homepage.js), detailed-product.html (samt detailed-product.js)
+
+## Tech Stack:
+### Backend - TypeScript, 
+
+### Frontend - HTML, JavaScript, CSS
+
+
