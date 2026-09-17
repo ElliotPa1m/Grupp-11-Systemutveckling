@@ -1,0 +1,38 @@
+#header {
+  width: 100%;
+  background-color: var(--color-text);
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  max-width: var(--content-max-width);
+  min-height: 4rem;
+  margin-inline: auto;
+  padding-inline: var(--space-medium);
+   }
+
+.logo img {
+  display: block;
+  width: 8rem;
+  height: auto;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  text-decoration: none;
+  margin-right: var(--space-large);
+} 
+
+.site-header .material-symbols-rounded {
+    color: var(--color-background);
+    height: 100%;
+}
+
+.site-header a {
+    text-decoration: none;
+}
