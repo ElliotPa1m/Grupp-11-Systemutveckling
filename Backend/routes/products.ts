@@ -20,7 +20,7 @@ interface Print {
     back_print: string | null
 }
 
-const getUserTierId = async (userId: number): Promise<number | null> => {
+export const getUserTierId = async (userId: number): Promise<number | null> => {
     const result = await pool.query<{ tier_id: number }>(
         "SELECT tier_id FROM users WHERE id = $1",
         [userId]
