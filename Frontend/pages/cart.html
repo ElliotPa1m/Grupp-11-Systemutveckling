@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/cart.css">
+
  <link
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=local_mall,login,logout,person&display=block">
@@ -14,6 +16,66 @@
 
 <body>
     <div id="header"></div>
+
+    <main>
+    <h1>Shopping cart</h1>
+
+      <section id="empty-cart" class="empty-cart">
+      <h2>Your cart is empty</h2>
+      <p>Explore our products and add something to your cart.</p>
+
+      <a href="./homepage.html" class="continue-shopping">
+        Continue shopping
+      </a>
+
+    </section>
+
+     <section
+      id="cart-content"
+      class="cart-content"
+      aria-label="Products in your shopping cart"
+      hidden
+    >
+      <div
+        id="cart-items"
+        class="cart-items"
+        aria-live="polite"
+      >
+      </div>
+
+      <aside class="order-summary">
+        <h2>Order summary</h2>
+
+        <dl class="order-summary__prices">
+          <div>
+            <dt>Subtotal</dt>
+            <dd id="subtotal">0 SEK</dd>
+          </div>
+
+          <div class="order-summary__total">
+            <dt>Total</dt>
+            <dd id="total-price">0 SEK</dd>
+          </div>
+        </dl>
+
+        <a
+          href="./checkout.html"
+          id="checkout-link"
+          class="checkout-link"
+        >
+          Proceed to checkout
+        </a>
+
+        <a
+          href="./homepage.html"
+          class="continue-shopping-link"
+        >
+          Continue shopping
+        </a>
+      </aside>
+    </section>
+
+    </main>
 
     <script type="module" src="../js/cart.js"></script>
 </body>
