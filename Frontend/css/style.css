@@ -1,0 +1,29 @@
+:root {
+    --color-primary: #fdffb6;
+    --color-background: #f8f8f8;
+    --color-background-dark: #525050;
+    --color-text: #2d2d2d;
+
+    --content-max-width: 100rem;
+
+    --space-small: 0.5rem;
+    --space-medium: 1rem;
+    --space-large: 2rem;
+
+
+  --border-default: 0.0625rem solid var(--color-background-dark);
+  --border-radius: 0.5rem;
+
+  --shadow-default:
+    0 0.125rem 0.5rem rgb(0 0 0 / 12%);
+
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--color-text);
+  background-color: var(--color-background);
+
+  /* FONT */
+}
