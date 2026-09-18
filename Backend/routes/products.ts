@@ -9,7 +9,8 @@ interface Product {
     id: number
     name: string | null
     price: number
-    clothes_image: string | null
+    clothes_image_front: string | null
+    clothes_image_back: string | null
     description: string | null
     tier_id: number
 }
@@ -62,7 +63,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 router.post("/", protect, adminOnly, async (req: Request, res: Response) => {
     try {
-        const { name, price, clothes_image, description, tier_id } = req.body as Partial<Product>
+        const { name, price, clothes_image_front, clothes_image_back, description, tier_id } = req.body as Partial<Product>
 
         if (price === undefined || tier_id === undefined) {
             res.status(400).json({ message: "Price and tier_id are required" })
@@ -70,10 +71,10 @@ router.post("/", protect, adminOnly, async (req: Request, res: Response) => {
         }
 
         const result = await pool.query<Product>(
-            `INSERT INTO products (name, price, clothes_image, description, tier_id)
-             VALUES ($1, $2, $3, $4, $5)
+            `INSERT INTO products (name, price, clothes_image_front, clothes_image_back, description, tier_id)
+             VALUES ($1, $2, $3, $4, $5, $6)
              RETURNING *`,
-            [name ?? null, price, clothes_image ?? null, description ?? null, tier_id]
+            [name ?? null, price, clothes_image_front ?? null, clothes_image_back ?? null, description ?? null, tier_id]
         )
 
         const created = result.rows[0]
@@ -98,18 +99,19 @@ router.put("/:id", protect, adminOnly, async (req: Request, res: Response) => {
             return
         }
 
-        const { name, price, clothes_image, description, tier_id } = req.body as Partial<Product>
+        const { name, price, clothes_image_front, clothes_image_back, description, tier_id } = req.body as Partial<Product>
 
         const result = await pool.query<Product>(
             `UPDATE products SET
                 name = COALESCE($1, name),
                 price = COALESCE($2, price),
-                clothes_image = COALESCE($3, clothes_image),
-                description = COALESCE($4, description),
-                tier_id = COALESCE($5, tier_id)
-             WHERE id = $6
+                clothes_image_front = COALESCE($3, clothes_image_front),
+                clothes_image_back = COALESCE($4, clothes_image_back),
+                description = COALESCE($5, description),
+                tier_id = COALESCE($6, tier_id)
+             WHERE id = $7
              RETURNING *`,
-            [name, price, clothes_image, description, tier_id, id]
+            [name ?? null, price ?? null, clothes_image_front ?? null, clothes_image_back ?? null, description ?? null, tier_id ?? null, id]
         )
 
         const updated = result.rows[0]

@@ -42,8 +42,9 @@ const loadProducts = async () => {
             const productElement = document.createElement("div")
             
             const image = document.createElement("img")
-            image.src = product.clothes_image || "placeholder.jpg"
+            image.src = product.clothes_image_front || "placeholder.jpg"
             image.alt = product.name
+            image.style.width = "300px"
 
             const text = document.createElement("p")
             text.textContent = product.name + " - $ " + product.price
@@ -53,7 +54,7 @@ const loadProducts = async () => {
 
             if (product.tier_id > userTierId) {
                 productElement.title = "Upgrade your membership to view this product"
-                productElement.style.opacity = "0.5"
+                productElement.style.opacity = "0.2"
             } else {
                 productElement.style.cursor = "pointer"
                 productElement.addEventListener("click", () => {
