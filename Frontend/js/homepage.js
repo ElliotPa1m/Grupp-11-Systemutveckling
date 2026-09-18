@@ -1,3 +1,7 @@
+import { header } from "./header.js"
+
+header()
+
 const productsContainer = document.getElementById("products-container")
 
 const getUserTierId = async () => {
