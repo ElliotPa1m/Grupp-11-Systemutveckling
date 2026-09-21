@@ -11,7 +11,7 @@
 ## Vem har gjort vad i frontend:
 ### August: admin-login.html, admin-new.html, admin.html, receipt.html (specifika js filer läggs till senare)
 ### Emily: cart.html, checkout.html, confirmation.html, tiers.html, loggan (specifika js filer läggs till senare)
-### Elliot: login.html (samt logout funktionen), register.html (samt register.js), homepage.html (samt homepage.js), detailed-product.html (samt detailed-product.js)
+### Elliot: login.html, register.html (samt register.js), homepage.html (samt homepage.js), detailed-product.html (samt detailed-product.js)
 
 ## Tech Stack:
 ### Backend - TypeScript, 

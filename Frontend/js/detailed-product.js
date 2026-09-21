@@ -8,22 +8,25 @@ const productId = params.get("id")
 const productDetail = document.getElementById("product-detail")
 
 let selectedPlacement = "front"
-let selectedPrintId = null
+let selectedFrontPrintId = null
+let selectedBackPrintId = null
 let currentProduct = null
 
 const updateOverlay = (shirtImage, printOverlay) => {
     if (!currentProduct) return
 
     shirtImage.src = selectedPlacement === "front"
-    ? currentProduct.clothes_image_front || "placeholder.jpg"
-    : currentProduct.clothes_image_back || "placeholder.jpg"
+        ? currentProduct.clothes_image_front || "placeholder.jpg"
+        : currentProduct.clothes_image_back || "placeholder.jpg"
 
-    if (!selectedPrintId) {
+    const activePrintId = selectedPlacement === "front" ? selectedFrontPrintId : selectedBackPrintId
+
+    if (!activePrintId) {
         printOverlay.style.display = "none"
         return
     }
 
-    const print = currentProduct.prints.find((p) => p.id === selectedPrintId)
+    const print = currentProduct.prints.find((p) => p.id === activePrintId)
     if (!print) {
         printOverlay.style.display = "none"
         return
@@ -81,25 +84,35 @@ const loadProduct = async () => {
         description.textContent = product.description || ""
 
         const frontBtn = document.createElement("button")
-        frontBtn.textContent = "Add chest print"
-
         const backBtn = document.createElement("button")
-        backBtn.textContent = "Add back print"
 
         const setPlacementButtons = () => {
+            frontBtn.textContent = "Add chest print" + (selectedFrontPrintId ? " ✓" : "")
+            backBtn.textContent = "Add back print" + (selectedBackPrintId ? " ✓" : "")
             frontBtn.style.border = selectedPlacement === "front" ? "2px solid black" : "none"
             backBtn.style.border = selectedPlacement === "back" ? "2px solid black" : "none"
+        }
+
+        const markSelectedPrint = () => {
+            const activePrintId = selectedPlacement === "front" ? selectedFrontPrintId : selectedBackPrintId
+            document.querySelectorAll("[data-print-id]").forEach((el) => {
+                el.style.border = Number(el.dataset.printId) === activePrintId
+                    ? "2px solid black"
+                    : "1px solid #ccc"
+            })
         }
 
         frontBtn.addEventListener("click", () => {
             selectedPlacement = "front"
             setPlacementButtons()
+            markSelectedPrint()
             updateOverlay(shirtImage, printOverlay)
         })
 
         backBtn.addEventListener("click", () => {
             selectedPlacement = "back"
             setPlacementButtons()
+            markSelectedPrint()
             updateOverlay(shirtImage, printOverlay)
         })
 
@@ -114,13 +127,13 @@ const loadProduct = async () => {
         updateOverlay(shirtImage, printOverlay)
 
         const printsContainer = document.createElement("div")
-        
+
         product.prints.forEach((print) => {
             const printOption = document.createElement("div")
             printOption.style.cursor = "pointer"
             printOption.style.border = "1px solid #ccc"
             printOption.dataset.printId = print.id
-            
+
             const printImage = document.createElement("img")
             printImage.src = print.small_print || print.back_print || "placeholder.jpg"
             printImage.alt = print.name
@@ -133,13 +146,14 @@ const loadProduct = async () => {
             printOption.appendChild(printName)
 
             printOption.addEventListener("click", () => {
-                selectedPrintId = print.id
+                if (selectedPlacement === "front") {
+                    selectedFrontPrintId = print.id
+                } else {
+                    selectedBackPrintId = print.id
+                }
 
-                document.querySelectorAll("[data-print-id]").forEach((el) => {
-                    el.style.border = "1px solid #ccc"
-                })
-                printOption.style.border = "2px solid black"
-
+                setPlacementButtons()
+                markSelectedPrint()
                 updateOverlay(shirtImage, printOverlay)
             })
 
