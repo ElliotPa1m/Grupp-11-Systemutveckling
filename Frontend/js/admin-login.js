@@ -32,7 +32,7 @@ form.addEventListener("submit", async (event) => {
       return;
     }
 
-    localStorage.setItem("token", data.token);
+    localStorage.setItem("adminToken", data.token);
     window.location.href = "admin.html";
   } catch (err) {
     console.error(err);
