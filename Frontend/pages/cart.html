@@ -8,40 +8,39 @@
 <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/cart.css">
 
- <link
+<link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=local_mall,login,logout,person&display=block">
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=delete,local_mall,login,arrow_back,logout,person&display=block"
+>
+
   <title>ShirtLab</title>
 </head>
 
 <body>
     <div id="header"></div>
 
-    <main>
-    <h1>Shopping cart</h1>
+    <main class="cart-page">
+        <h1>Shopping cart</h1>
 
       <section id="empty-cart" class="empty-cart">
       <h2>Your cart is empty</h2>
       <p>Explore our products and add something to your cart.</p>
 
-      <a href="./homepage.html" class="continue-shopping">
+      <a href="./homepage.html"   class="cart-btn-primary">
         Continue shopping
       </a>
 
     </section>
 
-     <section
-      id="cart-content"
-      class="cart-content"
-      aria-label="Products in your shopping cart"
-      hidden
-    >
-      <div
-        id="cart-items"
-        class="cart-items"
-        aria-live="polite"
-      >
-      </div>
+    <section id="cart-content" class="cart-content" aria-label="Products in your shopping cart" hidden>
+        <a href="./homepage.html" class="cart-btn-back">
+              <span class="material-symbols-rounded" aria-hidden="true">
+                arrow_back
+            </span>
+          Continue shopping
+        </a>
+    <div id="cart-items" class="cart-items" aria-live="polite">
+    </div>
 
       <aside class="order-summary">
         <h2>Order summary</h2>
@@ -49,29 +48,19 @@
         <dl class="order-summary__prices">
           <div>
             <dt>Subtotal</dt>
-            <dd id="subtotal">0 SEK</dd>
+            <dd id="subtotal">$0.00</dd>
           </div>
 
           <div class="order-summary__total">
             <dt>Total</dt>
-            <dd id="total-price">0 SEK</dd>
+            <dd id="total-price">$0.00</dd>
           </div>
         </dl>
 
-        <a
-          href="./checkout.html"
-          id="checkout-link"
-          class="checkout-link"
-        >
+        <a href="./checkout.html" id="checkout-link" class="cart-btn-primary">
           Proceed to checkout
         </a>
 
-        <a
-          href="./homepage.html"
-          class="continue-shopping-link"
-        >
-          Continue shopping
-        </a>
       </aside>
     </section>
 
