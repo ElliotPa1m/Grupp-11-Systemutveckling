@@ -4,6 +4,7 @@ import pool from './config/database.js';
 import adminRoutes from './routes/admin.js';
 import productRouter from "./routes/products.js"
 import usersRouter from "./routes/users.js"
+import receiptRouter from "./routes/receipts.js";
 
 import tiersRouter from "./routes/tiers.js";
 
@@ -29,6 +30,7 @@ app.use("/api/tiers", tiersRouter);
 app.use('/api/admin', adminRoutes);
 app.use('/api/products', productRouter);
 app.use("/api/users", usersRouter)
+app.use("/api/receipts", receiptRouter);
 
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'Server is running' });

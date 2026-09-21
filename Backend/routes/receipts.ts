@@ -30,7 +30,16 @@ interface OrderReceiptDetail extends OrderReceiptSummary {
 type Receipt =
   { type: 'order'; data: OrderReceiptSummary } |
   { type: 'order'; data: OrderReceiptDetail } |
-  { type: 'tier'; data: TierReceipt }; 
+  { type: 'tier'; data: TierReceipt } 
+
+interface CartItem {
+  productId: number;
+  printIds?: number[];
+}
+
+type ValidationResult =
+  { success: true, products: { id: number; price: number }[] } |
+  { success: false, status: number, error: string }
 
 const findAllOrderReceipts = async (userId: number): Promise<OrderReceiptSummary[]> => {
   const result = await db.query(`
@@ -137,6 +146,129 @@ const findTierReceiptById = async (userId: number, id: number): Promise<TierRece
   return result.rows[0];
 };
 
+const getUserTierId = async (userId: number): Promise<number | null> => {
+  const result = await db.query<{ tier_id: number }>(
+    "SELECT tier_id FROM users WHERE id = $1"
+    ,[userId]
+  );
+  return result.rows[0]?.tier_id ?? null;
+};
+
+const validateCartAccess = async (userId: number, cart: CartItem[]): Promise<ValidationResult> => {
+  if (cart.length === 0) {
+    return { success: false, status: 400, error: "Cart is empty" };
+  }
+  
+  const userTierId = await getUserTierId(userId);
+  if (userTierId === null) {
+    return { success: false, status: 403, error: 'No valid tier'};
+  }
+  const productIds = cart.map(item => item.productId);
+
+  const result = await db.query(`
+    SELECT id, tier_id, price FROM products WHERE id = ANY($1::int[]);
+    `, [productIds]
+  );
+
+  const tierById = new Map(result.rows.map(r => [r.id, r.tier_id]));
+
+  for (const item of cart) {
+    const requiredTierId = tierById.get(item.productId);
+
+    if (requiredTierId === undefined) {
+      return { success: false, status: 404, error: `Product ${item.productId} not found`};
+    }
+
+    if (userTierId < requiredTierId) {
+      return { success: false, status: 403, error: `Product ${item.productId} requires tier ${requiredTierId}`};
+    }
+  }
+
+  return { success: true, products: result.rows.map(r => ({ id: r.id, price: r.price })) };
+};
+
+const createReceipt = async (
+  userId: number, 
+  cart: CartItem[]
+): Promise<ValidationResult | { success: true; data: OrderReceiptDetail }> => {
+  const validation = await validateCartAccess(userId, cart);
+
+  if (!validation.success) {
+    return validation;
+  }
+
+  const priceById = new Map(validation.products.map(p => [p.id, p.price]));
+  const totalPrice = cart.reduce((sum, item) => sum + priceById.get(item.productId)!, 0);
+
+  const client = await db.connect();
+  let newReceiptId: number;
+  try {
+    await client.query('BEGIN');
+    const receiptResult = await client.query(`
+      INSERT INTO receipts_orders (user_id, total_price)
+      VALUES ($1, $2)
+      RETURNING id;
+      `, [userId, totalPrice]
+    );
+
+    newReceiptId = receiptResult.rows[0].id;
+
+    for (const item of cart) {
+      const productReceipt = await client.query(`
+        INSERT INTO products_receipts (product_id, receipt_id, price)
+        VALUES ($1, $2, $3)
+        RETURNING id;
+        `, [item.productId, newReceiptId, priceById.get(item.productId)]
+      );
+      const productReceiptId = productReceipt.rows[0].id;
+
+      for (const printId of item.printIds ?? []) {
+        await client.query(`
+          INSERT INTO prints_products_receipt (print_id, products_receipt_id)
+          VALUES ($1, $2);
+          `, [printId, productReceiptId]
+        );
+      }
+    }
+
+    await client.query('COMMIT');
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+
+  const receipt = await findOrderReceiptById(userId, newReceiptId);
+  return { success: true, data: receipt! };
+}
+
+export const createReceiptController = async (req: Request<{}, {}, { cart: CartItem[]}>, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    const cart = req.body.cart;
+
+    if (!userId) {
+      return res.status(401).json({ success: false, error: "Unauthorized" });
+    }
+
+    if (!Array.isArray(cart)) {
+      return res.status(400).json({ success: false, error: "Cart must be an array" });
+    }
+
+    const result = await createReceipt(userId, cart);
+
+    if (!result.success) {
+      return res.status(result.status).json(result);
+    }
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Failed to create receipt', error);
+    res.status(500).json({ success: false, error: 'Failed to create receipt' });
+  }
+}
+
 const getAllReceipts = async (userId: number): Promise<Receipt[]> => {
   const [orders, tiers] = await Promise.all([
     findAllOrderReceipts(userId),
@@ -214,5 +346,6 @@ const router = express.Router();
 
 router.get('/', protect, getAllReceiptsController);
 router.get('/:type/:id', protect, getReceiptByIdController);
+router.post('/', protect, createReceiptController);
 
 export default router;
