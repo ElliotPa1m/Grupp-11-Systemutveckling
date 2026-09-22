@@ -50,56 +50,74 @@ function renderCart() {
     return;
   }
 
-  cartItemsContainer.innerHTML = cartItems
-    .map((item, index) => {
-      const price = Number(item.price);
-      const quantity = Number(item.quantity ?? 1);
-      const itemTotal = price * quantity;
+cartItemsContainer.innerHTML = cartItems
+  .map((item, index) => {
+    const price = Number(item.price);
+    const quantity = Number(item.quantity ?? 1);
+    const itemTotal = price * quantity;
 
-      return `
-        <article class="cart-item">
-          <img
-            src="${item.image}"
-            alt="${item.name}"
-            class="cart-item__image"
+  const productImg =
+  item.productImg ??
+  "../assets/logo/primary.webp";
+
+    const selectedPrints = [];
+
+    if (item.frontPrintId != null) {
+      selectedPrints.push("Front print");
+    }
+
+    if (item.backPrintId != null) {
+      selectedPrints.push("Back print");
+    }
+
+    const printText =
+      selectedPrints.length > 0
+        ? selectedPrints.join(" and ")
+        : "No print";
+
+    return `
+      <article class="cart-item">
+        <img
+          src="${productImg}"
+          alt="${item.productName}"
+          class="cart-item__image"
+        >
+
+        <div class="cart-item__information">
+          <h2 class="cart-item__name">
+            ${item.productName}
+          </h2>
+
+          <p>
+            Selected print: ${printText}
+          </p>
+
+          <p>
+            Quantity: ${quantity}
+          </p>
+
+          <strong>
+            ${formatPrice(itemTotal)}
+          </strong>
+        </div>
+
+        <button
+          type="button"
+          class="cart-item__remove"
+          data-remove-index="${index}"
+          aria-label="Remove ${item.productName} from shopping cart"
+        >
+          <span
+            class="material-symbols-rounded"
+            aria-hidden="true"
           >
-
-          <div class="cart-item__information">
-            <h2 class="cart-item__name">
-              ${item.name}
-            </h2>
-
-            <p>
-              Selected print:
-              ${item.printOption ?? "No print"}
-            </p>
-
-            <p>
-              Quantity: ${quantity}
-            </p>
-
-            <strong>
-              ${formatPrice(itemTotal)}
-            </strong>
-          </div>
-
-          <button
-            type="button"
-            class="cart-item__remove"
-            data-remove-index="${index}"
-            aria-label="Remove ${item.name} from shopping cart"
-          >
-            <span
-              class="material-symbols-rounded"
-              aria-hidden="true"
-            >
-              delete
-            </span>
-          </button>
-        </article>
-      `;
-    })
-    .join("");
+            delete
+          </span>
+        </button>
+      </article>
+    `;
+  })
+  .join("");
 
   const subtotal = cartItems.reduce((sum, item) => {
     const price = Number(item.price);
@@ -130,7 +148,7 @@ function addRemoveButtonListeners() {
       pendingRemoveIndex = itemIndex;
 
       removeDialogMessage.textContent =
-        `Are you sure you want to remove ${item.name} from your shopping cart?`;
+        `Are you sure you want to remove ${item.productName} from your shopping cart?`;
 
       removeDialog.returnValue = "";
       removeDialog.showModal();
@@ -154,13 +172,16 @@ removeDialog.addEventListener("close", () => {
   pendingRemoveIndex = null;
 });
 
-checkoutLink.addEventListener("click", (event) => {
-  const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
-  if (!token) {
-    event.preventDefault();
-    window.location.href = "./login.html";
-  }
-});
+if (token) {
+  checkoutLink.textContent = "Proceed to checkout";
+  checkoutLink.href = "./checkout.html";
+} else {
+  checkoutLink.textContent =
+    "Log in to continue to checkout";
+
+  checkoutLink.href = "./login.html";
+}
 
 renderCart();
