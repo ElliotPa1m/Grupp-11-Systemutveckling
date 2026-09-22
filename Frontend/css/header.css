@@ -16,8 +16,8 @@
 
 .logo img {
   display: block;
-  width: 8rem;
-  height: auto;
+  width: 135px;
+  height: 85px;
   margin: var(--space-small);
 }
 
