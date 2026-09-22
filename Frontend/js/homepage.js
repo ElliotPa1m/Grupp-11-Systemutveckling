@@ -40,6 +40,7 @@ const loadProducts = async () => {
 
         products.forEach((product) => {
             const productElement = document.createElement("div")
+            productElement.classList.add("product-card")
             
             const image = document.createElement("img")
             image.src = product.clothes_image_front || "placeholder.jpg"
@@ -53,8 +54,12 @@ const loadProducts = async () => {
             productElement.appendChild(text)
 
             if (product.tier_id > userTierId) {
-                productElement.title = "Upgrade your membership to view this product"
-                productElement.style.opacity = "0.2"
+                image.classList.add("locked")
+
+                const lockLabel = document.createElement("span")
+                lockLabel.classList.add("lock-label")
+                lockLabel.textContent = product.tier_id === 2 ? "Plus membership" : "Gold membership"
+                productElement.appendChild(lockLabel)
             } else {
                 productElement.style.cursor = "pointer"
                 productElement.addEventListener("click", () => {
