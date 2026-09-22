@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/checkout.css">
+
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=arrow_back,delete,local_mall,login,logout,person&display=block"
+>
+
+  <title>ShirtLab</title>
+</head>
+
+<body>
+    <div id="header"></div>
+
+      <main >
+            <a href="./cart.html" class="checkout-back-link">
+      <span
+        class="material-symbols-rounded"
+        aria-hidden="true"
+      >
+        arrow_back
+      </span>
+      Back to shopping cart
+    </a>
+        <div class="checkout-page">
+            <h1>Checkout</h1>
+            <section class="checkout-section">
+                <h2>Billing information</h2>
+                <dl class="customer-information">
+                    <div>
+                    <dt>Name</dt>
+                    <dd id="customer-name">Loading...</dd>
+                    </div>
+
+                    <div>
+                    <dt>Email</dt>
+                    <dd id="customer-email">Loading...</dd>
+                    </div>
+
+                    <div>
+                    <dt>Membership</dt>
+                    <dd id="customer-tier">Loading...</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <form id="checkout-form" class="checkout-form">
+            <section class="checkout-section">
+                <h2>Shipping address</h2>
+
+                <div class="form-field">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address" autocomplete="street-address" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="postal-code">Postal code</label>
+                    <input type="text" id="postal-code" name="postalCode" autocomplete="postal-code" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" autocomplete="address-level2" required>
+                </div>
+            </section>
+
+             <section class="checkout-section">
+    <h2>Payment</h2>
+    <p>The invoice will be sent to your registered email address.</p>
+
+  </section>
+
+  <p id="checkout-message" class="checkout-message" aria-live="polite">
+  </p>
+
+  <button type="submit" id="place-order-button" class="checkout-button">
+    Place order
+  </button>
+</form>
+
+    </div>
+
+
+
+</main>
+
+    <script type="module" src="../js/checkout.js"></script>
+</body>
+</html>

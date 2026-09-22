@@ -1,0 +1,110 @@
+ main { width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding: var(--space-large) var(--space-medium);
+}
+
+.checkout-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-small);
+
+    margin-block: var(--space-medium);
+    padding: var(--space-small);
+
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.checkout-back-link .material-symbols-rounded {
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.checkout-back-link:hover {
+    background-color: var(--color-light-grey);
+}
+
+.checkout-back-link:hover .material-symbols-rounded {
+    transform: translateX(-0.25rem);
+}
+
+
+.checkout-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-large);
+    align-items: center;
+
+    padding-block: var(--space-medium) var(--space-large);
+}
+
+
+.checkout-section {
+    width: 100%;
+    max-width: 40rem;
+    padding: var(--space-large);
+    box-sizing: border-box;
+    box-shadow: var(--shadow-default);
+}
+
+.customer-information {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-medium);
+}
+
+.form-field,
+.customer-information div,
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-medium);
+}
+
+.checkout-form {
+    width: 100%;
+    max-width: 40rem;
+}
+
+.checkout-form .checkout-section {
+    max-width: none;
+}
+
+.form-field label,
+.customer-information dt {
+    font-weight: 600;
+}
+
+.customer-information dd {
+    margin: 0;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: var(--space-medium);
+
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 700;
+
+    background-color: var(--color-primary);
+    border: var(--border-default);
+    cursor: pointer;
+}
+
+.checkout-button:hover {
+    color: var(--color-background);
+    background-color: var(--color-background-dark);
+}
+
+.checkout-button:focus-visible {
+    outline: 0.125rem solid var(--color-text);
+    outline-offset: 0.25rem;
+}
+
+.checkout-button:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
