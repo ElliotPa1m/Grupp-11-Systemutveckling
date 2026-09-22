@@ -7,7 +7,7 @@ const productId = params.get("id")
 
 const productDetail = document.getElementById("product-detail")
 
-let selectedPlacement = "front"
+let selectedPlacement = null
 let selectedFrontPrintId = null
 let selectedBackPrintId = null
 let currentProduct = null
@@ -42,6 +42,12 @@ const getUserTierId = async () => {
 
 const updateOverlay = (shirtImage, printOverlay) => {
     if (!currentProduct) return
+
+    if (!selectedPlacement) {
+        shirtImage.src = currentProduct.clothes_image_front || "placeholder.jpg"
+        printOverlay.style.display = "none"
+        return
+    }
 
     shirtImage.src = selectedPlacement === "front"
         ? currentProduct.clothes_image_front || "placeholder.jpg"
@@ -90,14 +96,15 @@ const loadProduct = async () => {
         currentProduct = product
 
         const shirtPreview = document.createElement("div")
+        shirtPreview.classList.add("shirt-preview")
         shirtPreview.style.position = "relative"
-        shirtPreview.style.width = "300px"
 
         const shirtImage = document.createElement("img")
-        shirtImage.style.width = "400px"
+        shirtImage.classList.add("shirt-preview-image")
         shirtImage.alt = product.name
 
         const printOverlay = document.createElement("img")
+        printOverlay.classList.add("print-overlay")
         printOverlay.style.position = "absolute"
         printOverlay.style.display = "none"
 
@@ -105,27 +112,48 @@ const loadProduct = async () => {
         shirtPreview.appendChild(printOverlay)
 
         const name = document.createElement("h1")
+        name.classList.add("product-name")
         name.textContent = product.name
 
-        const price = document.createElement("p")
+        const price = document.createElement("h2")
+        price.classList.add("product-price")
         price.textContent = "$ " + product.price
 
-        const description = document.createElement("p")
-        description.textContent = product.description || ""
+        const description = document.createElement("ul")
+        description.classList.add("product-description")
+
+        const descriptionText = product.description || ""
+        const points = descriptionText
+        .split("\n")
+        .map((line) => line.replace(/^-\s*/, "").trim())
+        .filter(Boolean)
+        console.log(JSON.stringify(product.description))
+
+        points.forEach((point) => {
+            const li = document.createElement("li")
+            li.textContent = point.trim()
+            description.appendChild(li)
+        })
 
         const errorMessage = document.createElement("p")
+        errorMessage.classList.add("error-message")
         errorMessage.style.color = "red"
 
         const frontBtn = document.createElement("button")
+        frontBtn.classList.add("placement-btn", "placement-btn--front")
+
         const backBtn = document.createElement("button")
+        backBtn.classList.add("placement-btn", "placement-btn--back")
+
         const noPrintBtn = document.createElement("button")
+        noPrintBtn.classList.add("no-print-btn")
         noPrintBtn.textContent = "No print"
 
         const setPlacementButtons = () => {
             frontBtn.textContent = "Add chest print" + (selectedFrontPrintId ? " ✓" : "")
             backBtn.textContent = "Add back print" + (selectedBackPrintId ? " ✓" : "")
-            frontBtn.style.border = selectedPlacement === "front" ? "2px solid black" : "none"
-            backBtn.style.border = selectedPlacement === "back" ? "2px solid black" : "none"
+            frontBtn.classList.toggle("placement-btn--active", selectedPlacement === "front")
+            backBtn.classList.toggle("placement-btn--active", selectedPlacement === "back")
         }
 
         const markSelectedPrint = () => {
@@ -185,14 +213,17 @@ const loadProduct = async () => {
         })
 
         const quantityInput = document.createElement("input")
+        quantityInput.classList.add("quantity-input")
         quantityInput.type = "number"
         quantityInput.min = "1"
         quantityInput.value = "1"
 
         const addToCartBtn = document.createElement("button")
+        addToCartBtn.classList.add("add-to-cart-btn")
         addToCartBtn.textContent = "Add to cart"
 
         const cartMessage = document.createElement("p")
+        cartMessage.classList.add("cart-message")
 
         addToCartBtn.addEventListener("click", () => {
             const hasPrint = selectedFrontPrintId !== null || selectedBackPrintId !== null
@@ -228,22 +259,47 @@ const loadProduct = async () => {
 
         })
 
-        productDetail.appendChild(shirtPreview)
-        productDetail.appendChild(name)
-        productDetail.appendChild(price)
-        productDetail.appendChild(description)
-        productDetail.appendChild(errorMessage)
-        productDetail.appendChild(frontBtn)
-        productDetail.appendChild(backBtn)
-        productDetail.appendChild(noPrintBtn)
+        const detailsWrapper = document.createElement("div")
+        detailsWrapper.classList.add("product-details-wrapper")
+
+        detailsWrapper.appendChild(shirtPreview)
+
+        const infoColumn = document.createElement("div")
+        infoColumn.classList.add("product-info")
+        infoColumn.appendChild(name)
+        infoColumn.appendChild(price)
+        infoColumn.appendChild(description)
+        infoColumn.appendChild(quantityInput)
+        infoColumn.appendChild(addToCartBtn)
+        infoColumn.appendChild(cartMessage)
+
+        detailsWrapper.appendChild(infoColumn)
+
+        const printsSection = document.createElement("div")
+        printsSection.classList.add("prints-section")
+
+        printsSection.appendChild(errorMessage)
+        printsSection.appendChild(frontBtn)
+        printsSection.appendChild(backBtn)
+        printsSection.appendChild(noPrintBtn)
+
+        const pageLayout = document.createElement("div")
+        pageLayout.classList.add("page-layout")
+
+        pageLayout.appendChild(detailsWrapper)
+        pageLayout.appendChild(printsSection)
+
+        productDetail.appendChild(pageLayout)
 
         setPlacementButtons()
         updateOverlay(shirtImage, printOverlay)
 
         const printsContainer = document.createElement("div")
+        printsContainer.id = "prints-container"
 
         product.prints.forEach((print) => {
             const printOption = document.createElement("div")
+            printOption.classList.add("print-option")
             printOption.style.cursor = "pointer"
             printOption.style.border = "1px solid #ccc"
             printOption.dataset.printId = print.id
@@ -253,13 +309,14 @@ const loadProduct = async () => {
             printImage.alt = print.name
             printImage.style.width = "60px"
 
-            const printName = document.createElement("p")
-            printName.textContent = print.name
-
             printOption.appendChild(printImage)
-            printOption.appendChild(printName)
 
             printOption.addEventListener("click", () => {
+                if (!selectedPlacement) {
+                    errorMessage.textContent = "Please choose chest or back print first"
+                    return
+                }
+                
                 if (!checkAccess()) return
 
                 if (selectedPlacement === "front") {
@@ -276,10 +333,7 @@ const loadProduct = async () => {
             printsContainer.appendChild(printOption)
         })
 
-        productDetail.appendChild(printsContainer)
-        productDetail.appendChild(quantityInput)
-        productDetail.appendChild(addToCartBtn)
-        productDetail.appendChild(cartMessage)
+        printsSection.appendChild(printsContainer)
 
     } catch (error) {
         console.error(error)
