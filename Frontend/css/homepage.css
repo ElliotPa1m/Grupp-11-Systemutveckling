@@ -18,7 +18,6 @@
 }
 
 .product-card {
-    border-radius: var(--border-radius);
     padding: var(--space-small);
     position: relative;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -44,7 +43,6 @@
     background-color: var(--color-background-dark);
     color:var(--color-light-grey);
     padding: var(--space-small) var(--space-medium);
-    border-radius: var(--border-radius);
     font-weight: var(--font-weight-bold);
     z-index: 1;
 }

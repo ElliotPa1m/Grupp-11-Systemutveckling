@@ -1,0 +1,160 @@
+/* 
+    img .shirt-preview-image
+    h1 .product-name
+    p .product-price
+    p .product-description
+    button .placement-btn och .placement-btn--front
+    button .placement-btn och .placement-btn--back
+    button .no-print-btn
+    div (prints) .print-option
+    input .quantity-input
+    button .add-to-cart-btn
+
+    errorMessage .error-message
+    cartMessage .cart-message
+    shirtPreview .shirt-preview
+    printOverlay .print-overlay
+*/
+
+#prints-container {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    gap: 1rem;
+}
+
+.print-option {
+    cursor: pointer;
+    border: var(--border-default);
+    padding: var(--space-small);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.print-option:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+}
+
+.shirt-preview-image {
+    width: 100%;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.product-details-wrapper {
+    display: flex;
+    gap: var(--space-large);
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
+.shirt-preview {
+    position: relative;
+    width: 500px;
+    flex-shrink: 0;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-small);
+    min-width: 0;
+}
+
+.product-description {
+    list-style: none;
+    padding: 0;
+    padding-bottom: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.page-layout {
+    display: flex;
+    gap: var(--space-large);
+    align-items: flex-start;
+}
+
+.prints-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-small);
+}
+
+.quantity-input {
+    cursor: pointer;
+    border: var(--border-default);
+    padding: var(--space-small);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-to-cart-btn {
+    cursor: pointer;
+    background-color: var(--color-background);
+    border: var(--border-default);
+    padding: var(--space-small);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--color-primary);
+    color: black;
+    font-weight: var(--font-weight-bold);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+}
+
+.placement-btn {
+    cursor: pointer;
+    background-color: var(--color-background);
+    border: var(--border-default);
+    padding: var(--space-small);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.placement-btn:hover {
+    background-color: var(--color-primary);
+    color: black;
+    font-weight: var(--font-weight-bold);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+}
+
+.no-print-btn {
+    cursor: pointer;
+    background-color: var(--color-background);
+    border: var(--border-default);
+    padding: var(--space-small);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.no-print-btn:hover {
+    background-color: var(--color-primary);
+    color: black;
+    font-weight: var(--font-weight-bold);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+}
+
+.placement-btn--back {
+    border: var(--border-default);
+}
+
+.placement-btn--active {
+    border: 2px solid black;
+}
