@@ -11,6 +11,34 @@ let selectedPlacement = "front"
 let selectedFrontPrintId = null
 let selectedBackPrintId = null
 let currentProduct = null
+let userTierId = 1
+
+const getUserTierId = async () => {
+    const token = localStorage.getItem("token")
+
+    if (!token) {
+        return 1
+    }
+
+    try {
+        const response = await fetch("http://localhost:3000/api/users/me", {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
+
+        const data = await response.json()
+
+        if (!data.success) {
+            return 1
+        }
+
+        return data.user.tier_id
+    } catch (error) {
+        console.error(error)
+        return 1
+    }
+}
 
 const updateOverlay = (shirtImage, printOverlay) => {
     if (!currentProduct) return
@@ -49,6 +77,8 @@ const updateOverlay = (shirtImage, printOverlay) => {
 
 const loadProduct = async () => {
     try {
+        userTierId = await getUserTierId()
+
         const response = await fetch("http://localhost:3000/api/products/" + productId)
         const product = await response.json()
 
@@ -83,8 +113,13 @@ const loadProduct = async () => {
         const description = document.createElement("p")
         description.textContent = product.description || ""
 
+        const errorMessage = document.createElement("p")
+        errorMessage.style.color = "red"
+
         const frontBtn = document.createElement("button")
         const backBtn = document.createElement("button")
+        const noPrintBtn = document.createElement("button")
+        noPrintBtn.textContent = "No print"
 
         const setPlacementButtons = () => {
             frontBtn.textContent = "Add chest print" + (selectedFrontPrintId ? " ✓" : "")
@@ -102,7 +137,26 @@ const loadProduct = async () => {
             })
         }
 
+        const checkAccess = () => {
+            const token = localStorage.getItem("token")
+
+            if (!token) {
+                errorMessage.textContent = "You need to be logged in to add a print"
+                return false
+            }
+
+            if (userTierId < currentProduct.tier_id) {
+                errorMessage.textContent = "Upgrade your membership to add a print to this product"
+                return false
+            }
+
+            errorMessage.textContent = ""
+            return true
+        }
+
         frontBtn.addEventListener("click", () => {
+            if (!checkAccess()) return
+
             selectedPlacement = "front"
             setPlacementButtons()
             markSelectedPrint()
@@ -110,18 +164,64 @@ const loadProduct = async () => {
         })
 
         backBtn.addEventListener("click", () => {
+            if (!checkAccess()) return
+            
             selectedPlacement = "back"
             setPlacementButtons()
             markSelectedPrint()
             updateOverlay(shirtImage, printOverlay)
         })
 
+        noPrintBtn.addEventListener("click", () => {
+            if (selectedPlacement === "front") {
+                selectedFrontPrintId = null
+            } else {
+                selectedBackPrintId = null
+            }
+
+            setPlacementButtons()
+            markSelectedPrint()
+            updateOverlay(shirtImage, printOverlay)
+        })
+
+        const addToCartBtn = document.createElement("button")
+        addToCartBtn.textContent = "Add to cart"
+
+        const cartMessage = document.createElement("p")
+
+        addToCartBtn.addEventListener("click", () => {
+            const hasPrint = selectedFrontPrintId !== null || selectedBackPrintId !== null
+            const token = localStorage.getItem("token")
+
+            if (hasPrint && !token) {
+                window.location.href = "login.html"
+                return
+            }
+            
+            const cartItem = {
+                productId: currentProduct.id,
+                productName: currentProduct.name,
+                price: currentProduct.price,
+                frontPrintId: selectedFrontPrintId,
+                backPrintId: selectedBackPrintId
+            }
+
+            const cart = JSON.parse(localStorage.getItem("cart") || "[]")
+            cart.push(cartItem)
+            localStorage.setItem("cart", JSON.stringify(cart))
+
+            cartMessage.textContent = "Added to cart"
+
+        })
+
         productDetail.appendChild(shirtPreview)
         productDetail.appendChild(name)
         productDetail.appendChild(price)
         productDetail.appendChild(description)
+        productDetail.appendChild(errorMessage)
         productDetail.appendChild(frontBtn)
         productDetail.appendChild(backBtn)
+        productDetail.appendChild(noPrintBtn)
 
         setPlacementButtons()
         updateOverlay(shirtImage, printOverlay)
@@ -146,6 +246,8 @@ const loadProduct = async () => {
             printOption.appendChild(printName)
 
             printOption.addEventListener("click", () => {
+                if (!checkAccess()) return
+
                 if (selectedPlacement === "front") {
                     selectedFrontPrintId = print.id
                 } else {
@@ -161,6 +263,8 @@ const loadProduct = async () => {
         })
 
         productDetail.appendChild(printsContainer)
+        productDetail.appendChild(addToCartBtn)
+        productDetail.appendChild(cartMessage)
 
     } catch (error) {
         console.error(error)
