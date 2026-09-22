@@ -184,6 +184,11 @@ const loadProduct = async () => {
             updateOverlay(shirtImage, printOverlay)
         })
 
+        const quantityInput = document.createElement("input")
+        quantityInput.type = "number"
+        quantityInput.min = "1"
+        quantityInput.value = "1"
+
         const addToCartBtn = document.createElement("button")
         addToCartBtn.textContent = "Add to cart"
 
@@ -197,10 +202,19 @@ const loadProduct = async () => {
                 window.location.href = "login.html"
                 return
             }
+
+            const quantity = Number(quantityInput.value)
+
+            if (!Number.isInteger(quantity) || quantity < 1) {
+                cartMessage.textContent = "Please enter a valid quantity"
+                return
+            }
             
             const cartItem = {
                 productId: currentProduct.id,
                 productName: currentProduct.name,
+                productImg: currentProduct.clothes_image_front,
+                quantity,
                 price: currentProduct.price,
                 frontPrintId: selectedFrontPrintId,
                 backPrintId: selectedBackPrintId
@@ -263,6 +277,7 @@ const loadProduct = async () => {
         })
 
         productDetail.appendChild(printsContainer)
+        productDetail.appendChild(quantityInput)
         productDetail.appendChild(addToCartBtn)
         productDetail.appendChild(cartMessage)
 
