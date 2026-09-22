@@ -5,10 +5,15 @@ header();
 const emptyCart = document.querySelector("#empty-cart");
 const cartContent = document.querySelector("#cart-content");
 const cartItemsContainer = document.querySelector("#cart-items");
+const removeDialog = document.querySelector("#remove-dialog");
+const removeDialogMessage = document.querySelector("#remove-dialog-message");
 const subtotalElement = document.querySelector("#subtotal");
 const totalPriceElement = document.querySelector("#total-price");
 const checkoutLink = document.querySelector("#checkout-link");
+const shippingElement = document.querySelector("#shipping-cost");
+const SHIPPING_COST = 6;
 
+let pendingRemoveIndex = null;
 let cartItems = getCartItems();
 
 function getCartItems() {
@@ -40,6 +45,7 @@ function renderCart() {
   if (cartIsEmpty) {
     cartItemsContainer.innerHTML = "";
     subtotalElement.textContent = "$0.00";
+     shippingElement.textContent = "$0.00";
     totalPriceElement.textContent = "$0.00";
     return;
   }
@@ -101,9 +107,12 @@ function renderCart() {
 
     return sum + price * quantity;
   }, 0);
+  
+  const total = subtotal + SHIPPING_COST;
 
-  subtotalElement.textContent = formatPrice(subtotal);
-  totalPriceElement.textContent = formatPrice(subtotal);
+    subtotalElement.textContent = formatPrice(subtotal);
+    shippingElement.textContent = formatPrice(SHIPPING_COST);
+    totalPriceElement.textContent = formatPrice(total);
 
   addRemoveButtonListeners();
 }
@@ -116,13 +125,34 @@ function addRemoveButtonListeners() {
   removeButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const itemIndex = Number(button.dataset.removeIndex);
+      const item = cartItems[itemIndex];
 
-      cartItems.splice(itemIndex, 1);
-      saveCartItems();
-      renderCart();
+      pendingRemoveIndex = itemIndex;
+
+      removeDialogMessage.textContent =
+        `Are you sure you want to remove ${item.name} from your shopping cart?`;
+
+      removeDialog.returnValue = "";
+      removeDialog.showModal();
     });
   });
 }
+
+removeDialog.addEventListener("close", () => {
+  const removalWasConfirmed =
+    removeDialog.returnValue === "confirm";
+
+  if (
+    removalWasConfirmed &&
+    pendingRemoveIndex !== null
+  ) {
+    cartItems.splice(pendingRemoveIndex, 1);
+    saveCartItems();
+    renderCart();
+  }
+
+  pendingRemoveIndex = null;
+});
 
 checkoutLink.addEventListener("click", (event) => {
   const token = localStorage.getItem("token");

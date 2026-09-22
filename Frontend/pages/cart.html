@@ -21,6 +21,12 @@
 
     <main class="cart-page">
         <h1>Shopping cart</h1>
+        <a href="./homepage.html" class="cart-btn-back">
+              <span class="material-symbols-rounded" aria-hidden="true">
+                arrow_back
+            </span>
+          Continue shopping
+        </a>
 
       <section id="empty-cart" class="empty-cart">
       <h2>Your cart is empty</h2>
@@ -33,12 +39,6 @@
     </section>
 
     <section id="cart-content" class="cart-content" aria-label="Products in your shopping cart" hidden>
-        <a href="./homepage.html" class="cart-btn-back">
-              <span class="material-symbols-rounded" aria-hidden="true">
-                arrow_back
-            </span>
-          Continue shopping
-        </a>
     <div id="cart-items" class="cart-items" aria-live="polite">
     </div>
 
@@ -46,15 +46,18 @@
         <h2>Order summary</h2>
 
         <dl class="order-summary__prices">
-          <div>
-            <dt>Subtotal</dt>
-            <dd id="subtotal">$0.00</dd>
-          </div>
-
-          <div class="order-summary__total">
-            <dt>Total</dt>
-            <dd id="total-price">$0.00</dd>
-          </div>
+            <div>
+                <dt>Subtotal</dt>
+                <dd id="subtotal">$0.00</dd>
+            </div>
+            <div>
+                <dt>Shipping</dt>
+                <dd id="shipping-cost">$6.00</dd>
+            </div>
+            <div class="order-summary__total">
+                <dt>Total</dt>
+                <dd id="total-price">$0.00</dd>
+            </div>
         </dl>
 
         <a href="./checkout.html" id="checkout-link" class="cart-btn-primary">
@@ -65,6 +68,37 @@
     </section>
 
     </main>
+
+    <dialog id="remove-dialog" class="confirm-dialog" aria-labelledby="remove-dialog-title">
+  <form method="dialog" class="confirm-dialog__content">
+    <h2 id="remove-dialog-title">
+      Remove product?
+    </h2>
+
+    <p id="remove-dialog-message">
+      Are you sure you want to remove this product?
+    </p>
+
+    <div class="confirm-dialog__actions">
+      <button
+        type="submit"
+        value="cancel"
+        class="confirm-dialog__cancel"
+        autofocus
+      >
+        Keep item
+      </button>
+
+      <button
+        type="submit"
+        value="confirm"
+        class="confirm-dialog__remove"
+      >
+        Remove
+      </button>
+    </div>
+  </form>
+</dialog>
 
     <script type="module" src="../js/cart.js"></script>
 </body>
