@@ -24,7 +24,7 @@ interface Print {
 
 router.get("/", async (req: Request, res: Response) => {
     try {
-        const result = await pool.query<Product>("SELECT * FROM products")
+        const result = await pool.query<Product>("SELECT * FROM products ORDER BY id")
         res.json(result.rows)
     } catch (error) {
         console.error(error)
