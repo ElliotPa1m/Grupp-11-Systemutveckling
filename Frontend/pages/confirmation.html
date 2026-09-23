@@ -8,13 +8,38 @@
 <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/confirmation.css">
 
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=arrow_back,delete,local_mall,login,logout,person&display=block"
->
+   <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=check_circle,home,local_mall,login,logout,person&display=block"
+    >
 
   <title>ShirtLab</title>
 </head>
 
 <body>
-    <div id="header"></div>
+  <div id="header"></div>
+
+  <main class="confirmation-page">
+      <section class="confirmation-card">
+        <svg class="confirmation-icon" viewBox="0 0 60 60" aria-hidden="true">
+            <circle class="confirmation-icon__background" cx="30" cy="30" r="28"></circle>
+            <circle class="confirmation-icon__circle" cx="30" cy="30" r="23"></circle>
+            <path class="confirmation-icon__check" d="M18 31 L26 39 L43 21"></path>
+        </svg>
+
+          <h1>Thank you for your order!</h1>
+
+          <p>
+              Your order number is
+              <strong id="order-number">...</strong>
+          </p>
+
+          <a href="./homepage.html" class="confirmation-home-link">
+              Continue shopping
+          </a>
+      </section>
+  </main>
+
+    <script type="module" src="../js/confirmation.js"></script>
+</body>
+</html>
