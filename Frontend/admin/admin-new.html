@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/admin-new.css">
+  <title>Admin Add Product</title>
+</head>
+<body>
+  <div class="add-product-page">
+    <div add-product-card>
+      <a class="back" href="admin.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 19-7-7 7-7"/>
+          <path d="M19 12H5"/>
+        </svg>
+      </a>
+      <form id="add-product-form">
+        <div class="product-input">
+          <label for="name">Product Name</label>
+          <input type="text" name="name" id="name">
+        </div>
+        <div class="product-input">
+          <label for="price">Price</label>
+          <input type="number" name="price" id="price">
+        </div>
+        <div class="product-input">
+          <select name="tier" id="tier-select">
+            <option value="0">Select Tier</option>
+            <option value="1">Standard</option>
+            <option value="2">Plus</option>
+            <option value="3">Gold</option>
+          </select>
+        </div>
+
+        <div class="product-input">
+          <label for="front-url">Front Picture</label>
+          <input type="file" name="front-url" id="front-url" accept="image/png, image/jpeg, image/webp">
+        </div>
+        <div class="product-input textarea">
+          <label for="back-url">Back Picture</label>
+          <input type="file" name="back-url" id="back-url" accept="image/png, image/jpeg, image/webp">
+        </div>
+        <div>
+          <label for="description">Description</label>
+          <textarea name="description" id="description"></textarea>
+        </div>
+
+        <button type="submit" id="add-button">Add Product</button>
+        <p id="error"></p>
+        <p id="success"></p>
+      </form>
+    </div>
+  </div>
+  <script src="../js/admin-new.js"></script>
+</body>
+</html>

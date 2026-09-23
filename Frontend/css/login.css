@@ -1,0 +1,97 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#login-box {
+    background-color: var(--color-text);
+    width: 100%;
+    height: 9.375rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+#login-logo{
+    width: 8.4375rem;
+    height: 5.3125rem;
+}
+
+#login-h1 {
+    padding-left: 0.625rem;
+    color: var(--color-background);
+}
+
+#login-form {
+    padding-top: 0.9375rem;
+    padding-left: 6.25rem;
+}
+
+#login-email {
+    margin-bottom: 0.625rem;
+    background-color: var(--color-background);
+    border: var(--border-default);
+}
+
+#login-password {
+    background-color: var(--color-background);
+    border: var(--border-default);
+    margin-bottom: 0.9375rem;
+}
+
+#login-btn {
+    cursor: pointer;
+    background-color: var(--color-background);
+    border: var(--border-default);
+    padding: var(--space-small);
+    color: var(--color-text);
+    text-align: center;
+    box-sizing: border-box;
+    height: 2.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#login-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+    background-color: var(--color-primary);
+    color:black;
+}
+
+#login-register-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    cursor: pointer;
+    background-color: var(--color-background);
+    border: var(--border-default);
+    padding: var(--space-small);
+    text-align: center;
+    box-sizing: border-box;
+    height: 2.1875rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#login-register-link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+    background-color: var(--color-primary);
+    color:black;
+}
+
+@media (max-width: 600px) {
+    #login-form,
+    #register-form {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #login-box,
+    #register-box {
+        height: auto;
+        flex-direction: column;
+        padding: 1rem;
+    }
+}

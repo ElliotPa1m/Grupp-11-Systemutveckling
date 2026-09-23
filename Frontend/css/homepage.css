@@ -1,0 +1,61 @@
+#products-container {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    row-gap: 2rem;
+    column-gap: 4rem;
+    padding: 50px;
+}
+
+#products-container > div {
+    width: 300px;
+}
+
+#products-container img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.product-card {
+    padding: var(--space-small);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: #dfdbdb solid 1px;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-default);
+}
+
+.locked {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+.lock-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    background-color: var(--color-background-dark);
+    color:var(--color-light-grey);
+    padding: var(--space-small) var(--space-medium);
+    font-weight: var(--font-weight-bold);
+    z-index: 1;
+}
+
+@media (max-width: 1024px) {
+    #products-container {
+        grid-template-columns: repeat(2, 300px);
+    }
+}
+
+@media (max-width: 600px) {
+    #products-container {
+        grid-template-columns: repeat(1, 300px);
+        padding: 20px;
+    }
+}
