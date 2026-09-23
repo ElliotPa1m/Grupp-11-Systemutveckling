@@ -1,0 +1,124 @@
+body {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+#header {
+    flex-shrink: 0;
+}
+
+.confirmation-page {
+    display: grid;
+    place-items: center;
+    flex: 1;
+
+    width: 100%;
+    padding: var(--space-large) var(--space-medium);
+    box-sizing: border-box;
+}
+
+.confirmation-card {
+    width: 100%;
+    max-width: 40rem;
+    text-align: center;
+}
+
+.confirmation-home-link {
+         display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-medium);
+    margin-block: var(--space-large);
+
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+
+    background-color: var(--color-primary);
+    border: var(--border-default);
+    cursor: pointer;
+}
+
+.confirmation-home-link:hover{
+ color: var(--color-background);
+    background-color: var(--color-background-dark);
+}
+
+.confirmation-icon {
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    margin-inline: auto;
+}
+
+.confirmation-icon__background {
+    fill: var(--color-primary);
+    opacity: 0;
+    transform: scale(0.5);
+    transform-origin: center;
+
+    animation: show-background 0.5s ease-out forwards;
+}
+
+.confirmation-icon__circle,
+.confirmation-icon__check {
+    fill: none;
+    stroke: var(--color-text);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.confirmation-icon__circle {
+    stroke-dasharray: 145;
+    stroke-dashoffset: 145;
+    transform: rotate(-90deg);
+    transform-origin: center;
+
+    animation: draw-circle 0.7s ease 0.3s forwards;
+}
+
+.confirmation-icon__check {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+
+    animation: draw-check 0.5s ease 0.9s forwards;
+}
+
+@keyframes show-background {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes draw-circle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes draw-check {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confirmation-icon__background {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    .confirmation-icon__circle,
+    .confirmation-icon__check {
+        animation: none;
+        stroke-dashoffset: 0;
+    }
+}
