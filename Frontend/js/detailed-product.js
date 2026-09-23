@@ -70,14 +70,14 @@ const updateOverlay = (shirtImage, printOverlay) => {
         printOverlay.src = print.small_print || "placeholder.jpg"
         printOverlay.style.display = "block"
         printOverlay.style.width = "30px"
-        printOverlay.style.top = "105px"
-        printOverlay.style.left = "130px"
+        printOverlay.style.top = "140px"
+        printOverlay.style.left = "180px"
     } else {
         printOverlay.src = print.back_print || "placeholder.jpg"
         printOverlay.style.display = "block"
         printOverlay.style.width = "150px"
-        printOverlay.style.top = "90px"
-        printOverlay.style.left = "125px"
+        printOverlay.style.top = "110px"
+        printOverlay.style.left = "175px"
     }
 }
 
