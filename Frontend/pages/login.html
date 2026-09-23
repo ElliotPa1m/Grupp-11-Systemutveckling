@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/login.css">
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=local_mall,login,logout,person&display=block">
         <title>Login</title>
     </head>
     <body>
-        <h1>Login</h1>
+        
+        <div id="login-box"><img id="login-logo" src="../assets/logo/primary.webp"><h1 id="login-h1">Login</h1></div>
 
         <form id="login-form">
             <label for="login-email">Email</label><br>
             <input type="email" id="login-email" name="login-email" required><br>
-            <label for="login-password">Password</label>
+            <label for="login-password">Password</label><br>
             <input type="password" id="login-password" name="login-password" required><br>
-            <button type="submit">Log in</button>
+            <button id="login-btn" type="submit">Log in</button>
+            <a id="login-register-link" href="register.html">Don't have an account? Register here!</a>
             <p id="error-message" style="color: red;"></p>
         </form>
         <script src="../js/login.js"></script>

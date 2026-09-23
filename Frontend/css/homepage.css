@@ -46,3 +46,16 @@
     font-weight: var(--font-weight-bold);
     z-index: 1;
 }
+
+@media (max-width: 1024px) {
+    #products-container {
+        grid-template-columns: repeat(2, 300px);
+    }
+}
+
+@media (max-width: 600px) {
+    #products-container {
+        grid-template-columns: repeat(1, 300px);
+        padding: 20px;
+    }
+}

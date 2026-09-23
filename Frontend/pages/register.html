@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Register</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/register.css">
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=local_mall,login,logout,person&display=block">
+        <title>Register</title>
+    </head>
 <body>
-    <h1>Register here!</h1>
+    <div id="register-box"><img id="register-logo" src="../assets/logo/primary.webp"><h1 id="register-h1">Register</h1></div>
 
     <form id="register-form">
         <label for="name">Name</label><br>
-        <input type="text" id="name" name="name" required><br>
+        <input type="text" id="register-name" name="name" required><br>
         <label for="email">Email</label><br>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="register-email" name="email" required><br>
         <label for="password">Password</label><br>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Register</button>
+        <input type="password" id="register-password" name="password" required><br>
+        <button id="register-btn" type="submit">Register</button>
+        <a id="register-login-link" href="login.html">Already have an account? Log in here!</a>
         <p id="error-message" style="color: red;"></p>
     </form>
     <script src="../js/register.js"></script>

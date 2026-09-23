@@ -1,20 +1,3 @@
-/* 
-    img .shirt-preview-image
-    h1 .product-name
-    p .product-price
-    p .product-description
-    button .placement-btn och .placement-btn--front
-    button .placement-btn och .placement-btn--back
-    button .no-print-btn
-    div (prints) .print-option
-    input .quantity-input
-    button .add-to-cart-btn
-
-    errorMessage .error-message
-    cartMessage .cart-message
-    shirtPreview .shirt-preview
-    printOverlay .print-overlay
-*/
 
 #prints-container {
     display: grid;
@@ -157,4 +140,44 @@
 
 .placement-btn--active {
     border: 2px solid black;
+}
+
+@media (max-width: 1100px) {
+    .page-layout,
+    .product-details-wrapper {
+        flex-direction: column;
+    }
+
+     #product-detail {
+        padding: 1rem;
+    }
+
+    .shirt-preview {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    #prints-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    #product-detail {
+        padding: 0.75rem;
+    }
+    
+    .shirt-preview {
+        max-width: 300px;
+    }
+
+    #prints-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    .print-option {
+        padding: 0.5rem;
+    }
 }
