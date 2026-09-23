@@ -12,6 +12,8 @@
   min-height: 4rem;
   margin-inline: auto;
   padding-inline: var(--space-medium);
+      box-sizing: border-box;
+
    }
 
 .logo img {
@@ -25,15 +27,18 @@
     display: flex;
     align-items: stretch;
     align-self: stretch;
+
+       gap: 0;
+    margin: 0;
 }
 
 .header-action {
-display: flex;
+display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  min-width: 3.5rem;
   height: 100%;
-  padding-inline: var(--space-medium);
 
   color: var(--color-background);
   background-color: transparent;
@@ -57,4 +62,19 @@ display: flex;
 .header-action:focus-visible {
   outline: 0.125rem solid var(--color-background);
   outline-offset: -0.25rem;
+}
+
+
+@media (max-width: 40rem) {
+    .site-header {
+        padding-inline: var(--space-small);
+    }
+
+    .logo img {
+        width: 5.5rem;
+    }
+
+    .header-action {
+        min-width: 3rem;
+    }
 }

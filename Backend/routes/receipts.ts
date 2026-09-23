@@ -3,6 +3,8 @@ import type { Request, Response } from "express";
 import express from "express";
 import { protect } from '../middleware/authMiddleware.js';
 
+const SHIPPING_COST = 6;
+
 interface OrderReceiptSummary {
   id: number;
   total_price: number;
@@ -198,7 +200,7 @@ const createReceipt = async (
   }
 
   const priceById = new Map(validation.products.map(p => [p.id, p.price]));
-  const totalPrice = cart.reduce((sum, item) => sum + priceById.get(item.productId)!, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + priceById.get(item.productId)!, SHIPPING_COST);
 
   const client = await db.connect();
   let newReceiptId: number;
