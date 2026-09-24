@@ -11,7 +11,7 @@
   max-width: 24rem;
   background-color: var(--color-background);
   border: var(--border-default);
-  border-radius: var(--border-radius);
+  /* border-radius: var(--border-radius); */
   box-shadow: var(--shadow-default);
   padding: var(--space-large);
 }
@@ -41,7 +41,7 @@
 .login-input input {
   padding: var(--space-small);
   border: var(--border-default);
-  border-radius: var(--border-radius);
+  /* border-radius: var(--border-radius); */
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-family);
@@ -60,7 +60,7 @@
   padding: var(--space-small);
   height: 2.25rem;
   border: var(--border-default);
-  border-radius: var(--border-radius);
+  /* border-radius: var(--border-radius); */
   background-color: var(--color-background-dark);
   color: var(--color-background);
   font-family: var(--font-family);
