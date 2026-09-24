@@ -43,15 +43,16 @@ const getReceipts = async () => {
 };
 
 const displayReceipts = (receipts) => {
+  console.log(receipts);
   let content = "";
 
   receipts.forEach(receipt => {
     content += `
     <a href="detailed-receipt.html?type=${receipt.type}&id=${receipt.id}" class="receipt-card">
       <div class="receipt-info">
-        <p> ${receipt.type} </p>
-        <p> ${formatDate(receipt.date)} </p>
-        <p> ${receipt.total_price} </p>
+        <p class="receipt-type">${receipt.type}</p>
+        <p class="receipt-date">${formatDate(receipt.data.date)}</p>
+        <p class="receipt-price"><span>Total price</span> $${receipt.data.total_price}</p>
       </div>
     </a>`
   });
