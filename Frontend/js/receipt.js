@@ -6,7 +6,7 @@ const container = document.getElementById('receipt-container');
 const error = document.getElementById("error");
 const token = localStorage.getItem('token');
 
- export const formatDate = (dateString) => {
+const formatDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('sv-SE', {
     year: 'numeric',
@@ -43,12 +43,11 @@ const getReceipts = async () => {
 };
 
 const displayReceipts = (receipts) => {
-  console.log(receipts);
   let content = "";
 
   receipts.forEach(receipt => {
     content += `
-    <a href="detailed-receipt.html?type=${receipt.type}&id=${receipt.id}" class="receipt-card">
+    <a href="detailed-receipt.html?type=${receipt.type}&id=${receipt.data.id}" class="receipt-card">
       <div class="receipt-info">
         <p class="receipt-type">${receipt.type}</p>
         <p class="receipt-date">${formatDate(receipt.data.date)}</p>
