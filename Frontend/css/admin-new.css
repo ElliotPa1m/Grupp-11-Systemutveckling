@@ -1,0 +1,187 @@
+.add-product-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-medium);
+}
+
+.add-product-card {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  background-color: var(--color-background);
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  box-shadow: var(--shadow-default);
+  padding: var(--space-large);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: var(--space-medium);
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  background-color: var(--color-background-dark);
+  color: var(--color-background);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-default);
+  background-color: var(--color-primary);
+  color: black;
+}
+
+#add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+}
+
+.product-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.product-input label,
+#add-product-form > div > label {
+  font-weight: var(--font-weight-bold);
+  font-size: 0.875rem;
+}
+
+.product-input input,
+.product-input select,
+#add-product-form textarea {
+  padding: var(--space-small);
+  border: var(--border-default);
+ /*  border-radius: var(--border-radius); */
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 1rem;
+}
+
+.product-input input:focus,
+.product-input select:focus,
+#add-product-form textarea:focus {
+  outline: none;
+  border-color: var(--color-text);
+  box-shadow: var(--shadow-default);
+}
+
+.product-input input[type="file"] {
+  padding: var(--space-small) 0;
+  border: none;
+}
+
+.file-input input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  cursor: pointer;
+}
+
+.file-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-small) var(--space-medium);
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  background-color: var(--color-background-dark);
+  color: var(--color-background);
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-bold);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.file-label:hover .file-button {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-default);
+  background-color: var(--color-primary);
+  color: black;
+}
+
+.file-name {
+  font-size: 0.875rem;
+  color: var(--color-background-dark);
+}
+
+#tier-select {
+  cursor: pointer;
+}
+
+#add-product-form textarea {
+  resize: vertical;
+  min-height: 3rem;
+  font-family: var(--font-family);
+}
+
+#add-button {
+  margin-top: var(--space-medium);
+  cursor: pointer;
+  padding: var(--space-small);
+  height: 2.25rem;
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  background-color: var(--color-background-dark);
+  color: var(--color-background);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#add-button:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-default);
+  background-color: var(--color-primary);
+  color: black;
+}
+
+.form-message {
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.form-message:empty {
+  display: none;
+  margin: 0;
+}
+
+.form-message.error {
+  color: #c0392b;
+}
+
+.form-message.success {
+  color: #27ae60;
+}
+
+.required {
+  color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  .add-product-card {
+    padding: var(--space-medium);
+  }
+}

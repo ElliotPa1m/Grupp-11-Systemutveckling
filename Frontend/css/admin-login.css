@@ -1,0 +1,95 @@
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-medium);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 24rem;
+  background-color: var(--color-background);
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  box-shadow: var(--shadow-default);
+  padding: var(--space-large);
+}
+
+.login-card h1 {
+  margin-bottom: var(--space-large);
+  text-align: center;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+}
+
+.login-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+
+.login-input label {
+  font-weight: var(--font-weight-bold);
+  font-size: 0.875rem;
+}
+
+.login-input input {
+  padding: var(--space-small);
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 1rem;
+}
+
+.login-input input:focus {
+  outline: none;
+  border-color: var(--color-text);
+  box-shadow: var(--shadow-default);
+}
+
+#login-button {
+  margin-top: var(--space-small);
+  cursor: pointer;
+  padding: var(--space-small);
+  height: 2.25rem;
+  border: var(--border-default);
+  /* border-radius: var(--border-radius); */
+  background-color: var(--color-background-dark);
+  color: var(--color-background);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#login-button:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-default);
+  background-color: var(--color-primary);
+  color: black;
+}
+
+#error {
+  /* border-left: 3px solid #c0392b; */
+  /* background-color: #de8a81; */
+  color: #c0392b;
+  font-size: 0.875rem;
+  min-height: 1.2em;
+  text-align: center;
+}
+
+span {
+  color: #c0392b;
+}
+
+@media (max-width: 600px) {
+  .login-card {
+    padding: var(--space-medium);
+  }
+}

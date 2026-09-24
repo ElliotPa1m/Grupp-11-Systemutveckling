@@ -1,7 +1,6 @@
 const form = document.getElementById("add-product-form");
 const button = document.getElementById("add-button");
-const error = document.getElementById("error");
-const success = document.getElementById("success");
+const message = document.getElementById("form-message")
 const token = localStorage.getItem("adminToken");
 
 if (!token) {
@@ -10,10 +9,25 @@ if (!token) {
 
 const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
 
+const showError = (text) => {
+  message.textContent = text;
+  message.className = "form-message error";
+};
+
+const showSuccess = (text) => {
+  message.textContent = text;
+  message.className = "form-message success";
+};
+
+const clearMessage = () => {
+  message.textContent = "";
+  message.className = "form-message";
+};
+
 const validateImageFile = (file) => {
   if (!file) return false;
   if (!allowedTypes.includes(file.type)) {
-    error.textContent = "Only PNG, JPEG or WEBP images are allowed";
+    showError("Only PNG, JPEG or WEBP images are allowed");
     return false;
   }
   return true;
@@ -36,8 +50,23 @@ const uploadToCloudinary = async (file) => {
   return data.secure_url;
 }
 
+const bindFileInput = (inputId, nameSpanId) => {
+  const input = document.getElementById(inputId);
+  const nameSpan = document.getElementById(nameSpanId);
+
+  input.addEventListener('change', () => {
+    nameSpan.textContent = input.files.length
+      ? input.files[0].name
+      : 'No file chosen';
+  });
+};
+
+bindFileInput('front-url', 'front-url-name');
+bindFileInput('back-url', 'back-url-name');
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  clearMessage();
 
   const name = document.getElementById("name").value;
   const inputPrice = document.getElementById("price").value;
@@ -47,7 +76,7 @@ form.addEventListener("submit", async (event) => {
   const description = document.getElementById("description").value || null;
 
   if (!name || !inputPrice || !tier || !backFile || !frontFile) {
-    error.textContent = "Please fill in all required fields.";
+    showError("Please fill in all required fields.");
     return;
   }
 
@@ -59,17 +88,16 @@ form.addEventListener("submit", async (event) => {
   }
   
   if (price <= 0) {
-    error.textContent = "Price has to be more than 0";
+    showError("Price has to be more than 0")
     return;
   }
 
   if (tier_id === 0) {
-    error.textContent = "Please select a tier";
+    showError("Please select a tier");
     return;
   }
 
   button.disabled = true;
-  error.textContent = "";
 
   try {
     const clothes_image_back = await uploadToCloudinary(backFile);
@@ -87,15 +115,15 @@ form.addEventListener("submit", async (event) => {
     const data = await response.json();
 
     if (!response.ok) {
-      error.textContent = data.message ?? "Something went wrong. Please try again.";
+      showError(data.message ?? "Something went wrong. Please try again.");
       return;
     }
 
+    showSuccess("Product added successfully!");
     form.reset();
-    success.textContent = "Product added successfully!";
   } catch (err) {
     console.error(err);
-    error.textContent = "Something went wrong. Please try again.";
+    showError("Something went wrong. Please try again.");
   } finally {
     button.disabled = false;
   }
