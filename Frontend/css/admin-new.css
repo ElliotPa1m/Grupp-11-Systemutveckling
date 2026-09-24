@@ -12,7 +12,6 @@
   max-width: 32rem;
   background-color: var(--color-background);
   border: var(--border-default);
-  /* border-radius: var(--border-radius); */
   box-shadow: var(--shadow-default);
   padding: var(--space-large);
 }
@@ -25,7 +24,6 @@
   height: 2.5rem;
   margin-bottom: var(--space-medium);
   border: var(--border-default);
-  /* border-radius: var(--border-radius); */
   background-color: var(--color-background-dark);
   color: var(--color-background);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -35,7 +33,7 @@
   transform: translateY(-4px);
   box-shadow: var(--shadow-default);
   background-color: var(--color-primary);
-  color: black;
+  color: var(--color-text);
 }
 
 #add-product-form {
@@ -61,7 +59,6 @@
 #add-product-form textarea {
   padding: var(--space-small);
   border: var(--border-default);
- /*  border-radius: var(--border-radius); */
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-family);
@@ -106,7 +103,6 @@
   gap: var(--space-small);
   padding: var(--space-small) var(--space-medium);
   border: var(--border-default);
-  /* border-radius: var(--border-radius); */
   background-color: var(--color-background-dark);
   color: var(--color-background);
   font-family: var(--font-family);
@@ -143,7 +139,6 @@
   padding: var(--space-small);
   height: 2.25rem;
   border: var(--border-default);
-  /* border-radius: var(--border-radius); */
   background-color: var(--color-background-dark);
   color: var(--color-background);
   font-family: var(--font-family);

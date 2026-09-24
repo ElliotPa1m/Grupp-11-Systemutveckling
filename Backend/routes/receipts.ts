@@ -96,7 +96,8 @@ const findOrderReceiptById = async (userId: number, id: number): Promise<OrderRe
       p.name
     FROM products_receipts pr
     JOIN products p ON pr.product_id = p.id
-    WHERE pr.receipt_id = $1;
+    WHERE pr.receipt_id = $1
+    ORDER BY p.name;
     `, [id]
   );
 
@@ -108,7 +109,8 @@ const findOrderReceiptById = async (userId: number, id: number): Promise<OrderRe
       pri.name
     FROM prints_products_receipt ppr
     JOIN prints pri ON ppr.print_id = pri.id
-    WHERE ppr.products_receipt_id = ANY($1);
+    WHERE ppr.products_receipt_id = ANY($1)
+    ORDER BY pri.name;
     `, [productIds]
   );
 

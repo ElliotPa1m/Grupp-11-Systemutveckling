@@ -1,5 +1,4 @@
 import { header } from "./header.js";
-import { formatDate } from "./receipt.js";
 
 header();
 
@@ -7,6 +6,15 @@ const container = document.getElementById('receipt-container');
 const error = document.getElementById("error");
 const token = localStorage.getItem('token');
 let content = "";
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('sv-SE', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+};
 
 const getReceipt = async () => {
   try {
@@ -38,13 +46,43 @@ const getReceipt = async () => {
   }
 };
 
+const groupReceiptItems = (products) => {
+  const groups = new Map();
+
+  for (const p of products) {
+    const printKey = (p.prints ?? [])
+      .map(pr => pr.print_name)
+      .sort()
+      .join("|");
+    const key = `${p.product_name}::${printKey}`;
+
+    if (groups.has(key)) {
+      const group = groups.get(key);
+      group.quantity += 1;
+      group.totalPrice += Number(p.price);
+    } else {
+      groups.set(key, {
+        product_name: p.product_name,
+        prints: p.prints,
+        quantity: 1,
+        totalPrice: Number(p.price),
+      });
+    }
+  }
+
+  return Array.from(groups.values());
+}
+
 const displayOrderReceipt = (receipt) => {
-  const products = receipt.products.map(p => `
+  const products = groupReceiptItems(receipt.products).map(p => `
     <div class="receipt-item">
       <div class="receipt-item-row">
-        <span class="receipt-item-name">${p.product_name}</span>
-        <span class="receipt-item-price">$${p.price}</span>
-      </div>
+      <span class="receipt-item-name">
+        ${p.product_name}${p.quantity > 1 ? ` × ${p.quantity}` : ""}
+      </span>
+      <span class="receipt-item-price">$${p.totalPrice.toFixed(2)}</span>
+    </div>
+
 
       ${p.prints?.length
         ? `<ul class="receipt-prints">
@@ -70,7 +108,7 @@ const displayOrderReceipt = (receipt) => {
     
       <div class="receipt-total-row">
         <span>Total</span>
-        <span>$${receipt.total_price}</span>
+        <span>$${receipt.total_price.toFixed(2)}</span>
       </div>
 
       <div class="receipt-footer">
@@ -86,7 +124,7 @@ const displayTierReceipt = (receipt) => {
   content += `
     <article class="receipt-card">
       <div class="receipt-header">
-        <h1 class="receipt-meta">Kvitto · Tier Change</h1>
+        <h1 class="receipt-title">Kvitto · Tier Change</h1>
         <p class="receipt-date">${formatDate(receipt.date)}</p>
       </div>
 
@@ -95,7 +133,7 @@ const displayTierReceipt = (receipt) => {
       <div class="receipt-items">
         <div class="receipt-item-row">
           <span class="receipt-item-name">Changed To</span>
-          <span class="receipt-item-price">${receipt.tier}</span>
+          <span class="receipt-item-tier">${receipt.tier}</span>
         </div>
       </div>
 
@@ -103,7 +141,10 @@ const displayTierReceipt = (receipt) => {
       
       <div class="receipt-total-row">
         <span>Total</span>
-        <span>$${receipt.total_price}</span>
+        <span>$${receipt.total_price.toFixed(2)}</span>
+      </div>
+      <div class="receipt-footer">
+        <p>Thank you for your support!</p>
       </div>
     </article>
   `;
@@ -112,12 +153,13 @@ const displayTierReceipt = (receipt) => {
 };
 
 const loadContent = async () => {
-  const receipt = await getReceipt();
-  if (!receipt) return;
+  const result = await getReceipt();
+  if (!result) return;
+  const receipt = result.data;
 
-  if (receipt.type === 'order') {
+  if (result.type === 'order') {
     displayOrderReceipt(receipt);
-  } else if (receipt.type === 'tier') {
+  } else if (result.type === 'tier') {
     displayTierReceipt(receipt);
   }
 };
