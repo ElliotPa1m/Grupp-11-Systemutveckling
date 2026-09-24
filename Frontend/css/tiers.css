@@ -1,0 +1,121 @@
+ main { width: 100%;
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+.tiers-introduction {
+    margin: var(--space-large);
+}
+
+.tiers-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-large);
+    margin-block: var(--space-large);
+
+}
+
+.tier-card {
+    flex: 1 1 16rem;
+    max-width: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+        margin: var(--space-large);
+
+}
+
+.tier-icon.material-symbols-rounded {
+    display: grid;
+    place-items: center;
+
+    width: 5rem;
+    aspect-ratio: 1;
+    margin-inline: auto;
+    padding: 0;
+
+    color: var(--color-text);
+    font-size: 3rem;
+    line-height: 1;
+
+    background-color: var(--color-primary);
+    border-radius: 50%;
+}
+
+.tier-price {
+    font-weight: 700;
+}
+
+.tier-benefits {
+    align-self: stretch;
+    text-align: left;
+    list-style: none;
+}
+
+.tier-benefits li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-medium);
+    padding-bottom: var(--space-medium)
+}
+
+.tier-card--current {
+    background-color:  var(--color-primary);
+    border-radius: 50% 50%  0 0;
+}
+
+.tier-card--selected {
+    outline: 0.1875rem solid var(--color-primary);
+    outline-offset: 0.25rem;
+        border-radius: 50% 50%  0 0;
+background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+.tier-button {
+    margin-top: auto;
+    width: 100%;
+    padding: var(--space-medium) var(--space-large);
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 700;
+    background-color: var(--color-background);
+    border: var(--border-default);
+    cursor: pointer;
+}
+
+.tier-button:hover {
+    color:  var(--color-background);
+    background-color: var(--color-background-dark);
+}
+
+.tier-card--selected > button {
+    background-color: var(--color-text);
+    color: var(--color-background);
+}
+
+
+.tier-selection-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-large);
+}
+
+.continue-to-payment {
+    padding: var(--space-medium) var(--space-large);
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 700;
+    margin-bottom: 20rem;
+    background-color: var(--color-primary);
+    border: var(--border-default);
+    cursor: pointer;
+}
+
+.continue-to-payment:hover {
+    color: var(--color-background);
+    background-color: var(--color-background-dark);
+}
+
+.continue-to-payment[hidden] {
+    display: none;
+}
