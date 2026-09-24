@@ -6,7 +6,7 @@ const container = document.getElementById('receipt-container');
 const error = document.getElementById("error");
 const token = localStorage.getItem('token');
 
-const formatDate = (dateString) => {
+ export const formatDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('sv-SE', {
     year: 'numeric',
@@ -24,6 +24,11 @@ const getReceipts = async () => {
     });
 
     const data =  await response.json();
+
+    if (response.status === 401) {
+      window.location.href = "login.html";
+      return;
+    }
 
     if (!response.ok || !data.success) {
       error.textContent = data.error ?? "Something went wrong. Please try again";
