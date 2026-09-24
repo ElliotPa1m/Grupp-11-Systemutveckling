@@ -80,7 +80,6 @@ function createTierCard(tier, currentTierId) {
     };
 
     return `
-    
         <article class="tier-card ${isCurrentTier ? "tier-card--current" : ""}">
             <span class="material-symbols-rounded tier-icon" aria-hidden="true">
                 ${information.icon}
@@ -109,8 +108,17 @@ function createTierCard(tier, currentTierId) {
 }
 
 function addTierSelectionListeners(tiers, currentTierId) {
-    const tierButtons = document.querySelectorAll(".tier-button");
+    const tierButtons = document.querySelectorAll(".tier-button[data-tier-id]");
     const continueButton = document.querySelector("#continue-to-payment");
+    const paymentDialog = document.querySelector("#tier-payment-dialog");
+    const reviewTierName = document.querySelector("#review-tier-name");
+    const reviewTierPrice = document.querySelector("#review-tier-price");
+    const paymentMessage = document.querySelector("#tier-payment-message");
+    const cancelPaymentButton = document.querySelector("#cancel-tier-payment");
+    const confirmPaymentButton = document.querySelector("#confirm-tier-payment");
+    const successDialog = document.querySelector("#tier-success-dialog");
+    const successReceipt = document.querySelector("#tier-success-receipt");
+    const closeSuccessButton = document.querySelector("#close-tier-success");
 
     tierButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -141,7 +149,7 @@ function addTierSelectionListeners(tiers, currentTierId) {
         });
     });
 
-  continueButton.addEventListener("click", () => {
+    continueButton.addEventListener("click", () => {
         if (!selectedTier) {
             return;
         }
@@ -153,7 +161,68 @@ function addTierSelectionListeners(tiers, currentTierId) {
             return;
         }
 
-        console.log("Continue with:", selectedTier);
+        reviewTierName.textContent = selectedTier.name;
+        reviewTierPrice.textContent = formatPrice(selectedTier.price);
+        paymentMessage.textContent = "";
+
+        paymentDialog.showModal();
+    });
+
+    cancelPaymentButton.addEventListener("click", () => {
+        paymentDialog.close();
+    });
+
+    closeSuccessButton.addEventListener("click", () => {
+        successDialog.close();
+    });
+
+    successDialog.addEventListener("close", () => {
+        renderTiers();
+    });
+
+    confirmPaymentButton.addEventListener("click", async () => {
+        const token = localStorage.getItem("token");
+
+        if (!selectedTier || !token) {
+            return;
+        }
+
+        confirmPaymentButton.disabled = true;
+        paymentMessage.textContent = "Processing your membership...";
+
+        try {
+            const response = await fetch("http://localhost:3000/api/tiers/subscribe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    tierId: Number(selectedTier.id),
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message ?? "Could not update membership");
+            }
+
+            paymentDialog.close();
+
+            successReceipt.textContent = data.receipt.id;
+            successDialog.showModal();
+            
+        } catch (error) {
+            console.error("Could not update membership:", error);
+
+            paymentMessage.textContent =
+                error instanceof Error
+                    ? error.message
+                    : "Could not update membership. Please try again.";
+
+            confirmPaymentButton.disabled = false;
+        }
     });
 }
 
@@ -192,10 +261,70 @@ async function renderTiers() {
                 </button>
             </div>
 
+            <dialog id="tier-payment-dialog" class="tier-payment-dialog">
+                <div class="tier-payment-content">
+                    <button type="button" id="cancel-tier-payment" class="tier-dialog-close" aria-label="Close payment review">
+                        <span class="material-symbols-rounded" aria-hidden="true">close</span>
+                    </button>
+                    <h2>Review your membership</h2>
+
+                    <dl>
+                        <div>
+                            <dt>Membership</dt>
+                            <dd id="review-tier-name"></dd>
+                        </div>
+
+                        <div>
+                            <dt>Price</dt>
+                            <dd id="review-tier-price"></dd>
+                        </div>
+
+                        <div>
+                            <dt>Payment method</dt>
+                            <dd>Invoice by email</dd>
+                        </div>
+                    </dl>
+
+                    <p>
+                        This is a simulated payment. The invoice will be sent
+                        to your registered email address.
+                    </p>
+
+                    <p id="tier-payment-message" class="tiers-message" aria-live="polite"></p>
+
+                    <div class="tier-payment-actions">
+                        <button type="button" id="confirm-tier-payment" class="tier-button">
+                            Confirm membership
+                        </button>
+                    </div>
+                </div>
+            </dialog>
+
+            <dialog id="tier-success-dialog" class="tier-success-dialog">
+                <div class="tier-success-content">
+                        <button type="button" id="close-tier-success" class="tier-dialog-close" aria-label="Close confirmation">
+                            <span class="material-symbols-rounded" aria-hidden="true">close</span>
+                        </button>
+
+                    <svg class="confirmation-icon" viewBox="0 0 64 64" role="img" aria-label="Success">
+                        <circle class="confirmation-icon__background" cx="32" cy="32" r="30"></circle>
+                        <circle class="confirmation-icon__circle" cx="32" cy="32" r="23"></circle>
+                        <path class="confirmation-icon__check" d="M21 33 L28 40 L43 23"></path>
+                    </svg>
+
+                    <h2>Membership updated</h2>
+
+                    <p>
+                        Your receipt number is
+                        <strong id="tier-success-receipt"></strong>.
+                    </p>
+                </div>
+            </dialog>
+
             <p id="tiers-message" class="tiers-message" aria-live="polite"></p>
         `;
 
-    addTierSelectionListeners(tiers, currentTierId);
+        addTierSelectionListeners(tiers, currentTierId);
     } catch (error) {
         console.error("Could not load memberships:", error);
 

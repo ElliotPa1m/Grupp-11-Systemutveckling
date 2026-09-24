@@ -61,13 +61,13 @@
 
 .tier-card--current {
     background-color:  var(--color-primary);
-    border-radius: 50% 50%  0 0;
+    border-radius: 45% 45%  0 0;
 }
 
 .tier-card--selected {
     outline: 0.1875rem solid var(--color-primary);
     outline-offset: 0.25rem;
-        border-radius: 50% 50%  0 0;
+        border-radius: 45% 45% 0 0;
 background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
 }
 
@@ -118,4 +118,93 @@ background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
 
 .continue-to-payment[hidden] {
     display: none;
+}
+
+.tier-dialog-close {
+    position: absolute;
+    top: var(--space-medium);
+    right: var(--space-medium);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2.5rem;
+    aspect-ratio: 1;
+
+    color: var(--color-text);
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.tier-dialog-close:hover {
+    background-color: var(--color-light-grey);
+}
+
+.tier-dialog-close:focus-visible {
+    outline: 0.125rem solid var(--color-text);
+    outline-offset: 0.125rem;
+}
+
+
+.confirmation-icon {
+    display: block;
+    width: 6rem;
+    height: 6rem;
+    margin-inline: auto;
+}
+
+.confirmation-icon__background {
+    fill: var(--color-primary);
+    opacity: 0;
+    transform: scale(0.5);
+    transform-origin: center;
+
+    animation: show-background 0.5s ease-out forwards;
+}
+
+.confirmation-icon__circle,
+.confirmation-icon__check {
+    fill: none;
+    stroke: var(--color-text);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.confirmation-icon__circle {
+    stroke-dasharray: 145;
+    stroke-dashoffset: 145;
+    transform: rotate(-90deg);
+    transform-origin: center;
+
+    animation: draw-circle 0.7s ease 0.3s forwards;
+}
+
+.confirmation-icon__check {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+
+    animation: draw-check 0.5s ease 0.9s forwards;
+}
+
+@keyframes show-background {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes draw-circle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes draw-check {
+    to {
+        stroke-dashoffset: 0;
+    }
 }
