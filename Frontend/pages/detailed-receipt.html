@@ -4,17 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receipt</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/detailed-receipt.css">
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&icon_names=local_mall,login,logout,person&display=block">
 </head>
 <body>
 
   <div id="header"></div>
   <main class="receipt-page">
+    <a class="back" href="receipt.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 19-7-7 7-7"/>
+        <path d="M19 12H5"/>
+      </svg>
+    </a>
     <section id="receipt-container">
     </section>
     <p id="error"></p>
   </main>
 
-  <script src="../js/detailed-receipt.js"></script>
+  <script type="module" src="../js/detailed-receipt.js"></script>
   
 </body>
 </html>
