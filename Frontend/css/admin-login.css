@@ -84,6 +84,10 @@
   text-align: center;
 }
 
+span {
+  color: #c0392b;
+}
+
 @media (max-width: 600px) {
   .login-card {
     padding: var(--space-medium);
