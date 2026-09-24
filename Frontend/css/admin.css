@@ -93,4 +93,16 @@
   main {
     padding: var(--space-medium);
   }
+
+  #container {
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: var(--space-medium);
+  }
+}
+
+@media (max-width: 400px) {
+  #container {
+    grid-template-columns: 1fr;
+    gap: var(--space-medium);
+  }
 }
