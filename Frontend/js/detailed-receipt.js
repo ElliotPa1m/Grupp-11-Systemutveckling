@@ -1,4 +1,5 @@
 import { header } from "./header.js";
+import { host } from "../variables";
 
 header();
 
@@ -21,7 +22,7 @@ const getReceipt = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const type = urlParams.get('type');
     const id = urlParams.get('id');
-    const response = await fetch(`http://localhost:3000/api/receipts/${type}/${id}`, {
+    const response = await fetch(`${host}/api/receipts/${type}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

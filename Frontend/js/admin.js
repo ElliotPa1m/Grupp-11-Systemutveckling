@@ -2,6 +2,7 @@ const container = document.getElementById('container');
 const error = document.getElementById("error");
 const logoutButton = document.getElementById("logout-button");
 const token = localStorage.getItem("adminToken");
+import { host } from "../variables";
 
 logoutButton.addEventListener("click", () => {
   localStorage.removeItem('adminToken');
@@ -10,7 +11,7 @@ logoutButton.addEventListener("click", () => {
 
 const getProducts = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/products/");
+    const response = await fetch(`${host}/api/products/`);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);

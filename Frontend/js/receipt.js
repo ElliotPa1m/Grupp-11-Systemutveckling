@@ -1,4 +1,5 @@
 import { header } from "./header.js";
+import { host } from "../variables";
 
 header();
 
@@ -17,7 +18,7 @@ const formatDate = (dateString) => {
 
 const getReceipts = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/receipts/", {
+    const response = await fetch(`${host}/api/receipts/`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
