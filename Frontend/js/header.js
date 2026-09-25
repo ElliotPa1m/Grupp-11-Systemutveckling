@@ -40,7 +40,7 @@ export function header() {
 
     headerContainer.innerHTML = `
         <header class="site-header">
-            <a href="./homepage.html" class="logo">
+            <a href="./index.html" class="logo">
                 <img src="../assets/logo/primary.webp" alt="Shirt lab">
             </a>
 
@@ -125,6 +125,6 @@ export function header() {
 
     logoutButton?.addEventListener("click", () => {
         localStorage.removeItem("token");
-        window.location.href = "./homepage.html";
+        window.location.href = "./index.html";
     });
 }
