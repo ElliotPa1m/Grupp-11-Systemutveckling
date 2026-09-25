@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-ts": "nodemon --watch . --ext ts --exec tsx index.ts"
+    "dev": "nodemon --watch . --ext ts --exec tsx index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
