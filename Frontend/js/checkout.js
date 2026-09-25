@@ -18,13 +18,13 @@ if (!token) {
 async function loadCustomerInformation() {
   try {
     const [userResponse, tiersResponse] = await Promise.all([
-      fetch("http://localhost:3000/api/users/me", {
+      fetch(`${host}/api/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }),
 
-      fetch("http://localhost:3000/api/tiers"),
+      fetch(`${host}/api/tiers`),
     ]);
 
     if (userResponse.status === 401) {
@@ -106,7 +106,7 @@ checkoutForm.addEventListener("submit", async (event) => {
 
   try {
     const response = await fetch(
-      "http://localhost:3000/api/receipts",
+      `${host}/api/receipts`,
       {
         method: "POST",
 
