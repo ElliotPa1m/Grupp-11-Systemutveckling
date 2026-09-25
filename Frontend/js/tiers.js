@@ -54,7 +54,7 @@ async function getCurrentTierId() {
         return null;
     }
 
-    const response = await fetch("http://localhost:3000/api/users/me", {
+    const response = await fetch(`${host}api/users/me`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -191,7 +191,7 @@ function addTierSelectionListeners(tiers, currentTierId) {
         paymentMessage.textContent = "Processing your membership...";
 
         try {
-            const response = await fetch("http://localhost:3000/api/tiers/subscribe", {
+            const response = await fetch(`${host}/api/tiers/subscribe`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -235,7 +235,7 @@ async function renderTiers() {
 
     try {
         const [tiersResponse, currentTierId] = await Promise.all([
-            fetch("http://localhost:3000/api/tiers"),
+            fetch(`${host}/api/tiers`),
             getCurrentTierId(),
         ]);
 

@@ -1,3 +1,5 @@
+import { host } from "../variables.js";
+
 export function header() {
     const headerContainer = document.querySelector("#header");
 
@@ -63,7 +65,7 @@ export function header() {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/api/users/me", {
+            const response = await fetch(`${host}/api/users/me`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
