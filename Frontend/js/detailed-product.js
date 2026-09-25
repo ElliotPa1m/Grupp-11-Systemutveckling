@@ -1,3 +1,4 @@
+import { host } from "../variables";
 import { header } from "./header.js"
 
 header()
@@ -21,7 +22,7 @@ const getUserTierId = async () => {
     }
 
     try {
-        const response = await fetch("http://localhost:3000/api/users/me", {
+        const response = await fetch(`${host}/api/users/me`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -85,7 +86,7 @@ const loadProduct = async () => {
     try {
         userTierId = await getUserTierId()
 
-        const response = await fetch("http://localhost:3000/api/products/" + productId)
+        const response = await fetch(`${host}/api/products/` + productId)
         const product = await response.json()
 
         if (!response.ok) {
