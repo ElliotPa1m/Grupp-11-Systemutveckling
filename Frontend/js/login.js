@@ -25,7 +25,7 @@ form.addEventListener("submit", async (event) => {
         }
 
         localStorage.setItem("token", data.token)
-        window.location.href = "homepage.html"
+        window.location.href = "index.html"
 
     } catch (error) {
         console.error(error)
