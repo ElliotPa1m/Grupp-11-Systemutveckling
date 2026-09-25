@@ -2,7 +2,7 @@ const container = document.getElementById('container');
 const error = document.getElementById("error");
 const logoutButton = document.getElementById("logout-button");
 const token = localStorage.getItem("adminToken");
-import { host } from "../variables";
+import { host } from "../variables.js";
 
 logoutButton.addEventListener("click", () => {
   localStorage.removeItem('adminToken');

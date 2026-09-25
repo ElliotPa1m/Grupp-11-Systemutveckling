@@ -1,7 +1,7 @@
 const form = document.getElementById("login-form");
 const error = document.getElementById("error");
 const button = document.getElementById("login-button");
-import { host } from "../variables";
+import { host } from "../variables.js";
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();

@@ -2,7 +2,7 @@ const form = document.getElementById("add-product-form");
 const button = document.getElementById("add-button");
 const message = document.getElementById("form-message")
 const token = localStorage.getItem("adminToken");
-import { host } from "../variables";
+import { host } from "../variables.js";
 
 if (!token) {
   window.location.href = "admin-login.html";
