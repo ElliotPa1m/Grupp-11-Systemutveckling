@@ -25,7 +25,7 @@ form.addEventListener("submit", async (event) => {
             return
         }
 
-        window.location.href = "login.html"
+        window.location.href = "/login"
     } catch (error) {
         console.error(error)
         errorMessage.textContent = "Something went wrong. Please try again."

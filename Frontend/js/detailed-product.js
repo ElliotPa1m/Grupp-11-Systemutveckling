@@ -243,7 +243,7 @@ const loadProduct = async () => {
             const token = localStorage.getItem("token")
 
             if (hasPrint && !token) {
-                window.location.href = "login.html"
+                window.location.href = "/login"
                 return
             }
 

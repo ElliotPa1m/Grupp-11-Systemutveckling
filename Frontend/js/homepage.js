@@ -64,7 +64,7 @@ const loadProducts = async () => {
             } else {
                 productElement.style.cursor = "pointer"
                 productElement.addEventListener("click", () => {
-                    window.location.href = "detailed-product.html?id=" + product.id
+                    window.location.href = "/product?id=" + product.id
                 })
             }
             
