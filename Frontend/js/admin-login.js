@@ -1,6 +1,7 @@
 const form = document.getElementById("login-form");
 const error = document.getElementById("error");
 const button = document.getElementById("login-button");
+import { host } from "../variables";
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -17,7 +18,7 @@ form.addEventListener("submit", async (event) => {
   error.textContent = "";
 
   try {
-    const response = await fetch("http://localhost:3000/api/admin/login", {
+    const response = await fetch(`${host}/api/admin/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

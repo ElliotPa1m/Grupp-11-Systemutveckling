@@ -2,6 +2,7 @@ const form = document.getElementById("add-product-form");
 const button = document.getElementById("add-button");
 const message = document.getElementById("form-message")
 const token = localStorage.getItem("adminToken");
+import { host } from "../variables";
 
 if (!token) {
   window.location.href = "admin-login.html";
@@ -103,7 +104,7 @@ form.addEventListener("submit", async (event) => {
     const clothes_image_back = await uploadToCloudinary(backFile);
     const clothes_image_front = await uploadToCloudinary(frontFile);
 
-    const response = await fetch("http://localhost:3000/api/products/", {
+    const response = await fetch(`${host}/api/products/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
