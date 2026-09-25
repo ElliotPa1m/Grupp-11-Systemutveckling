@@ -1,5 +1,36 @@
 {
   "rewrites": [
-    
+    {
+      "source": "/",
+      "destination": "/pages/index.html"
+    },
+    {
+      "source": "login",
+      "destination":"/pages/login.html"
+    },
+    {
+      "source": "register",
+      "destination": "/pages/register.html"
+    },
+    {
+      "source": "cart",
+      "destination": "/pages/cart.html"
+    },
+    {
+      "source": "checkout",
+      "destination": "/pages/checkout.html"
+    },
+    {
+      "source": "confirmation",
+      "destination": "/pages/confirmation.html"
+    },
+    {
+      "source": "tiers",
+      "destination": "/pages/tiers.html"
+    },
+    {
+      "source": "receipt",
+      "destination": "/pages/receipt.html"
+    }
   ]
 }
