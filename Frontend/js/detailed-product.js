@@ -119,6 +119,12 @@ const loadProduct = async () => {
         price.classList.add("product-price")
         price.textContent = "$ " + product.price
 
+        const upgradePrint = document.createElement("h3")
+        upgradePrint.textContent = "Become a higher tier member to add prints"
+
+        const upgradeBack = document.createElement("h3")
+        upgradeBack.textContent = "Become a Gold tier member to add back prints"
+
         const description = document.createElement("ul")
         description.classList.add("product-description")
 
@@ -192,6 +198,12 @@ const loadProduct = async () => {
         })
 
         backBtn.addEventListener("click", () => {
+
+            if (userTierId !==3) {
+                errorMessage.textContent = "Back print is only available for Gold members"
+                return
+            }
+
             if (!checkAccess()) return
             
             selectedPlacement = "back"
@@ -268,6 +280,15 @@ const loadProduct = async () => {
         infoColumn.classList.add("product-info")
         infoColumn.appendChild(name)
         infoColumn.appendChild(price)
+
+        if (userTierId === 1) {
+            infoColumn.appendChild(upgradePrint)
+        }
+
+        if (userTierId === 2) {
+            infoColumn.appendChild(upgradeBack)
+        }
+
         infoColumn.appendChild(description)
         infoColumn.appendChild(quantityInput)
         infoColumn.appendChild(addToCartBtn)
@@ -282,6 +303,10 @@ const loadProduct = async () => {
         printsSection.appendChild(frontBtn)
         printsSection.appendChild(backBtn)
         printsSection.appendChild(noPrintBtn)
+
+        if (userTierId === 1) {
+            printsSection.style.display = "none"
+        }
 
         const pageLayout = document.createElement("div")
         pageLayout.classList.add("page-layout")
