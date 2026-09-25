@@ -1,5 +1,5 @@
 import { header } from "./header.js";
-import { host } from "../variables";
+import { host } from "../variables.js";
 
 header();
 
