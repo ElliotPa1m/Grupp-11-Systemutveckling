@@ -1,4 +1,4 @@
-import { host } from "../variables";
+import { host } from "../variables.js";
 import { header } from "./header.js"
 
 header()

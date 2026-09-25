@@ -1,4 +1,4 @@
-import { host } from "../variables";
+import { host } from "../variables.js";
 
 const form = document.getElementById("login-form")
 const errorMessage = document.getElementById("error-message")
