@@ -5,35 +5,35 @@
       "destination": "/pages/index.html"
     },
     {
-      "source": "/index.html",
-      "destination": "/pages/index.html"
+      "source": "/login",
+      "destination": "/pages/login.html"
     },
     {
-      "source": "/login.html",
-      "destination":"/pages/login.html"
-    },
-    {
-      "source": "/register.html",
+      "source": "/register",
       "destination": "/pages/register.html"
     },
     {
-      "source": "/cart.html",
+      "source": "/product",
+      "destination": "/pages/detailed-product.html"
+    },
+    {
+      "source": "/cart",
       "destination": "/pages/cart.html"
     },
     {
-      "source": "/checkout.html",
+      "source": "/checkout",
       "destination": "/pages/checkout.html"
     },
     {
-      "source": "/confirmation.html",
+      "source": "/confirmation",
       "destination": "/pages/confirmation.html"
     },
     {
-      "source": "/tiers.html",
+      "source": "/tiers",
       "destination": "/pages/tiers.html"
     },
     {
-      "source": "/receipt.html",
+      "source": "/receipt",
       "destination": "/pages/receipt.html"
     }
   ]
