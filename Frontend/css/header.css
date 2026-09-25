@@ -64,6 +64,58 @@ display: inline-flex;
   outline-offset: -0.25rem;
 }
 
+.header-menu {
+    position: relative;
+    display: flex;
+    align-self: stretch;
+}
+
+.header-dropdown {
+    position: absolute;
+    z-index: 10;
+    top: 100%;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    min-width: 12rem;
+
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    pointer-events: none;
+
+    background-color: var(--color-background);
+    border: var(--border-default);
+    box-shadow: var(--shadow-default);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s;
+}
+
+.header-dropdown a {
+    padding: var(--space-medium);
+
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.header-dropdown a:hover,
+.header-dropdown a:focus-visible {
+    background-color: var(--color-light-grey);
+}
+
+.header-menu:hover .header-dropdown,
+.header-menu:focus-within .header-dropdown,
+.header-menu--open .header-dropdown {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
 
 @media (max-width: 40rem) {
     .site-header {
