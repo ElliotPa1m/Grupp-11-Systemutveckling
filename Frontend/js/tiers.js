@@ -1,4 +1,5 @@
 import { header } from "./header.js";
+import { host } from "../variables.js";
 
 header();
 
@@ -54,7 +55,7 @@ async function getCurrentTierId() {
         return null;
     }
 
-    const response = await fetch(`${host}api/users/me`, {
+    const response = await fetch(`${host}/api/users/me`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

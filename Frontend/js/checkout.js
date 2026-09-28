@@ -1,4 +1,5 @@
 import { header } from "./header.js";
+import { host } from "../variables.js";
 
 header();
 
