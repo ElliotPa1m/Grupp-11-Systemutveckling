@@ -12,16 +12,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
-  'http://localhost:5173',
-  'http://127.0.0.1:5500',
-  'http://localhost:5500'
-]
+  "http://127.0.0.1:5500",
+  "http://localhost:5500",
+  "https://grupp-11-systemutveckling.vercel.app",
+  "https://grupp-11-systemutveckling-git-fix-deployment-elliotpa1m-project.vercel.app",
+];
 
-app.use(cors({ 
-  origin: process.env.NODE_ENV === 'production' 
-  ? process.env.FRONTEND_URL
-  : allowedOrigins,
-  credentials: true 
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
 }));
 
 app.use(express.json());
