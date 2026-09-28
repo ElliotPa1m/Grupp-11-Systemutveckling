@@ -54,7 +54,7 @@ const displayReceipts = (receipts) => {
         <p class="empty-receipt-text">
           You haven't made any purchases yet, explore our shop to get started.
         </p>
-        <a href="shop.html" class="empty-receipt-link">Browse the shop</a>
+        <a href="/" class="empty-receipt-link">Browse the shop</a>
       </div>
     `;
     return;
