@@ -13,7 +13,7 @@ const placeOrderButton = document.querySelector("#place-order-button");
 const token = localStorage.getItem("token");
 
 if (!token) {
-  window.location.href = "./login.html";
+  window.location.href = "/login";
 }
 
 async function loadCustomerInformation() {
@@ -30,7 +30,7 @@ async function loadCustomerInformation() {
 
     if (userResponse.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "./login.html";
+      window.location.href = "/login";
       return;
     }
 
@@ -135,8 +135,8 @@ checkoutForm.addEventListener("submit", async (event) => {
     localStorage.removeItem("cart");
 
     window.location.href =
-      `./confirmation.html?type=order&id=${result.data.id}`;
-  } catch (error) {
+    `/confirmation?type=order&id=${result.data.id}`
+    } catch (error) {
     console.error("Checkout failed:", error);
 
     checkoutMessage.textContent =

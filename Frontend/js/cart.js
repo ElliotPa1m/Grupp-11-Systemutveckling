@@ -176,12 +176,12 @@ const token = localStorage.getItem("token");
 
 if (token) {
   checkoutLink.textContent = "Proceed to checkout";
-  checkoutLink.href = "./checkout.html";
+  checkoutLink.href = "/checkout";
 } else {
   checkoutLink.textContent =
     "Log in to continue to checkout";
 
-  checkoutLink.href = "./login.html";
+  checkoutLink.href = "/login";
 }
 
 renderCart();

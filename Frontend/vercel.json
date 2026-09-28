@@ -6,7 +6,7 @@
     },
     {
       "source": "/login",
-      "destination": "/pages/login.html"
+      "destination": "/pages//login"
     },
     {
       "source": "/register",
@@ -35,6 +35,22 @@
     {
       "source": "/receipt",
       "destination": "/pages/receipt.html"
+    },
+    {
+        "source": "/receipt-detail",
+        "destination": "/pages/detailed-receipt.html"
+    },
+    {
+    "source": "/admin",
+    "destination": "/admin/admin.html"
+    },
+    {
+    "source": "/admin/login",
+    "destination": "/admin/admin-login.html"
+    },
+    {
+    "source": "/admin/new",
+    "destination": "/admin/admin-new.html"
     }
   ]
 }

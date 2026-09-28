@@ -34,7 +34,7 @@ form.addEventListener("submit", async (event) => {
     }
 
     localStorage.setItem("adminToken", data.token);
-    window.location.href = "admin.html";
+    window.location.href = "/admin";
   } catch (err) {
     console.error(err);
     error.textContent = "Something went wrong. Please try again.";

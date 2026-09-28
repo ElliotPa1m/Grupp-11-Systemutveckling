@@ -27,7 +27,7 @@ const getReceipts = async () => {
     const data =  await response.json();
 
     if (response.status === 401) {
-      window.location.href = "login.html";
+      window.location.href = "/login";
       return;
     }
 
@@ -48,8 +48,8 @@ const displayReceipts = (receipts) => {
 
   receipts.forEach(receipt => {
     content += `
-    <a href="detailed-receipt.html?type=${receipt.type}&id=${receipt.data.id}" class="receipt-card">
-      <div class="receipt-info">
+    <a href="/receipt-detail?type=${receipt.type}&id=${receipt.data.id}" class="receipt-card">
+        <div class="receipt-info">
         <p class="receipt-type">${receipt.type}</p>
         <p class="receipt-date">${formatDate(receipt.data.date)}</p>
         <p class="receipt-price"><span>Total price</span> $${receipt.data.total_price}</p>
@@ -68,7 +68,7 @@ const loadContent = async () => {
 
 const init = () => {
   if (!token) {
-    window.location.href = "login.html";
+    window.location.href = "/login";
     return;
   }
   loadContent();

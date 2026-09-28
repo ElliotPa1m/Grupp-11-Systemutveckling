@@ -6,7 +6,7 @@ import { host } from "../variables.js";
 
 logoutButton.addEventListener("click", () => {
   localStorage.removeItem('adminToken');
-  window.location.href = "admin-login.html";
+  window.location.href = "/admin/login";
 });
 
 const getProducts = async () => {
@@ -53,7 +53,7 @@ const loadContent = async () => {
 
 const init = () => {
   if (!token) {
-    window.location.href = "admin-login.html";
+    window.location.href = "/admin/login";
     return;
   }
   loadContent();

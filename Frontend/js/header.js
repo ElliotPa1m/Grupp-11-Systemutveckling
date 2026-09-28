@@ -25,13 +25,13 @@ export function header() {
                 </button>
 
                 <nav id="profile-menu" class="header-dropdown" aria-label="Profile menu">
-                    <a href="./receipt.html">Receipts</a>
-                    <a href="./tiers.html">Memberships</a>
+                    <a href="/receipt">Receipts</a>
+                    <a href="/tiers">Memberships</a>
                 </nav>
             </div>
         `
         : `
-            <a href="./login.html" class="header-action" aria-label="Log in" title="Log in">
+            <a href="/login" class="header-action" aria-label="Log in" title="Log in">
                 <span class="material-symbols-rounded" aria-hidden="true">
                     login
                 </span>
@@ -40,14 +40,14 @@ export function header() {
 
     headerContainer.innerHTML = `
         <header class="site-header">
-            <a href="./homepage.html" class="logo">
+            <a href="/" class="logo">
                 <img src="../assets/logo/primary.webp" alt="Shirt lab">
             </a>
 
             <div class="header-actions">
                 ${accountElement}
 
-                <a href="./cart.html" class="header-action" aria-label="Open shopping cart" title="Shopping cart">
+                <a href="/cart" class="header-action" aria-label="Open shopping cart" title="Shopping cart">
                     <span class="material-symbols-rounded" aria-hidden="true">
                         local_mall
                     </span>
@@ -125,6 +125,6 @@ export function header() {
 
     logoutButton?.addEventListener("click", () => {
         localStorage.removeItem("token");
-        window.location.href = "./homepage.html";
+        window.location.href = "/";
     });
 }
