@@ -49,6 +49,46 @@
   font-weight: var(--font-weight-bold);
 }
 
+.empty-receipt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-small);
+  padding: var(--space-large) 0;
+  text-align: center;
+}
+
+.empty-receipt-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.empty-receipt-text {
+  margin: 0;
+  max-width: 28rem;
+  line-height: 1.6;
+  color: var(--color-background-dark);
+}
+
+.empty-receipt-link {
+  margin-top: var(--space-medium);
+  padding: 0.75rem 1.5rem;
+  border: var(--border-default);
+  color: var(--color-background);
+  background-color: var(--color-background-dark);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.empty-receipt-link:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  box-shadow: var(--shadow-default);
+}
+
 #error {
   color: #c0392b;
   font-size: 0.875rem;
