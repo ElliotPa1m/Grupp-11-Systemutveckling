@@ -5,7 +5,7 @@ const token = localStorage.getItem("adminToken");
 import { host } from "../variables.js";
 
 if (!token) {
-  window.location.href = "admin-login.html";
+  window.location.href = "/admin/login";
 }
 
 const allowedTypes = ["image/png", "image/jpeg", "image/webp"];

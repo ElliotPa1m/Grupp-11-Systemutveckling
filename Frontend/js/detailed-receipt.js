@@ -31,7 +31,7 @@ const getReceipt = async () => {
     const data = await response.json();
 
     if (response.status === 401) {
-      window.location.href = "login.html";
+      window.location.href = "/login";
       return;
     }
 
@@ -167,7 +167,7 @@ const loadContent = async () => {
 
 const init = () => {
   if (!token) {
-    window.location.href = "login.html";
+    window.location.href = "/login";
     return;
   }
   loadContent();
