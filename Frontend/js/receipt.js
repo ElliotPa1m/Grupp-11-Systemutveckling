@@ -45,11 +45,25 @@ const getReceipts = async () => {
 
 const displayReceipts = (receipts) => {
   let content = "";
+  console.log(receipts);
+
+  if (receipts.length === 0) {
+    container.innerHTML = `
+      <div class="empty-receipt">
+        <p class="empty-receipt-title">No orders yet</p>
+        <p class="empty-receipt-text">
+          You haven't made any purchases yet, explore our shop to get started.
+        </p>
+        <a href="shop.html" class="empty-receipt-link">Browse the shop</a>
+      </div>
+    `;
+    return;
+  }
 
   receipts.forEach(receipt => {
     content += `
     <a href="/receipt-detail?type=${receipt.type}&id=${receipt.data.id}" class="receipt-card">
-        <div class="receipt-info">
+      <div class="receipt-info">
         <p class="receipt-type">${receipt.type}</p>
         <p class="receipt-date">${formatDate(receipt.data.date)}</p>
         <p class="receipt-price"><span>Total price</span> $${receipt.data.total_price}</p>

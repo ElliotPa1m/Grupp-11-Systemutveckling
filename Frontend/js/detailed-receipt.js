@@ -78,11 +78,11 @@ const displayOrderReceipt = (receipt) => {
   const products = groupReceiptItems(receipt.products).map(p => `
     <div class="receipt-item">
       <div class="receipt-item-row">
-      <span class="receipt-item-name">
-        ${p.product_name}${p.quantity > 1 ? ` × ${p.quantity}` : ""}
-      </span>
-      <span class="receipt-item-price">$${p.totalPrice.toFixed(2)}</span>
-    </div>
+        <span class="receipt-item-name">
+          ${p.product_name}${p.quantity > 1 ? ` × ${p.quantity}` : ""}
+        </span>
+        <span class="receipt-item-price">$${p.totalPrice.toFixed(2)}</span>
+      </div>
 
 
       ${p.prints?.length
@@ -103,6 +103,10 @@ const displayOrderReceipt = (receipt) => {
 
       <div class="receipt-items">
         ${products}
+        <div class="receipt-item-row">
+          <span class="receipt-item-name">Shipping</span>
+          <span class="receipt-item-price">$6.00</span>
+        </div>
       </div>
 
       <div class="receipt-divider"></div>
@@ -125,7 +129,7 @@ const displayTierReceipt = (receipt) => {
   content += `
     <article class="receipt-card">
       <div class="receipt-header">
-        <h1 class="receipt-title">Kvitto · Tier Change</h1>
+        <h1 class="receipt-title">Receipt · Tier Change</h1>
         <p class="receipt-date">${formatDate(receipt.date)}</p>
       </div>
 
